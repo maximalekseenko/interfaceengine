@@ -1,8 +1,7 @@
-/// @file position_types.h
-/// @author maxim (necromax) alekseenko
-/// @brief Defines common types for coordinate system.
+// Copyright 2026 maxim (necromax) alekseenko
 
-#pragma once
+#ifndef INCLUDE_INTERFACE_POSITION_TYPES_H_
+#define INCLUDE_INTERFACE_POSITION_TYPES_H_
 
 /// @brief Used to define horizontal alignment of an object.
 enum class HorizontalAlignment { Left, Center, Right };
@@ -18,3 +17,5 @@ using PosPercent = float;
 
 /// @brief Rotation of an object in degrees (usually counter-clockwise).
 using PosAngle = double;
+
+#endif  // INCLUDE_INTERFACE_POSITION_TYPES_H_

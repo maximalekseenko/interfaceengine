@@ -6,11 +6,13 @@
 
 #include <cstdint>
 #include <fstream>
-#include <set>
+#include <memory>
+#include <set>  // TODO(necromax): clean includes
 #include <sstream>
 #include <stack>
 #include <string>
 #include <unordered_set>
+#include <utility>
 
 #include "interface/lumen/manager/exceptions.h"
 #include "interface/lumen/package/package.h"

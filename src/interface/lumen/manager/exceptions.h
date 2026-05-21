@@ -1,7 +1,7 @@
 // Copyright 2026 maxim (necromax) alekseenko
 
-#ifndef SRC_INTERFACE_LUMEN_OBJECT_EXCEPTIONSAAA_H_
-#define SRC_INTERFACE_LUMEN_OBJECT_EXCEPTIONSAAA_H_
+#ifndef SRC_INTERFACE_LUMEN_MANAGER_EXCEPTIONS_H_
+#define SRC_INTERFACE_LUMEN_MANAGER_EXCEPTIONS_H_
 
 #include <stdexcept>
 #include <string>
@@ -34,4 +34,4 @@ class DLL_LOCAL PackageAlreadyExistsError : public ManagerException {
 
 }  // namespace lumen::manager
 
-#endif  // SRC_INTERFACE_LUMEN_OBJECT_EXCEPTIONSAAA_H_
+#endif  // SRC_INTERFACE_LUMEN_MANAGER_EXCEPTIONS_H_

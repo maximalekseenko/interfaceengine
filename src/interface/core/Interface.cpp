@@ -1,7 +1,4 @@
-/// @file interface.cpp
-/// @author maxim (necromax) alekseenko
-/// @brief Defines private part of Inteface
-/// and holds implementation of both.
+// Copyright 2026 maxim (necromax) alekseenko
 
 #include "interface/core/interface.h"
 
@@ -12,6 +9,8 @@
 
 #include <memory>
 #include <stack>
+#include <string>
+#include <utility>
 
 #include "interface/core/settings.h"
 #include "interface/lumen/manager/manager.h"
@@ -191,15 +190,11 @@ void Interface::Impl::HandleEvents() {
   }
 }
 
-void Interface::LoadLumens(std::string packageName) {
+void Interface::LoadLumens(std::string package_path) {
   SDL_Renderer* renderer = this->impl->window_manager.GetRenderer();
 
   try {
-    this->impl->lumen_manager.LoadLumPackage(
-        (this->impl->settings.executable_path
-         / this->impl->settings.asset_folder / packageName)
-            .string(),
-        renderer);
+    this->impl->lumen_manager.LoadLumPackage(package_path, renderer);
   } catch (const std::exception& e) {
     impl->logger->Log(std::string("Failed to load lum package:") + e.what(),
                       LogLevel::Error);

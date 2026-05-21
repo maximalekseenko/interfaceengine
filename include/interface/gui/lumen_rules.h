@@ -1,16 +1,14 @@
-/// @file lumen_rules.h
-/// @author maxim (necromax) alekseenko
-/// @brief Defines LumenRules.
+// Copyright 2026 maxim (necromax) alekseenko
 
-#pragma once
-
+#ifndef INCLUDE_INTERFACE_GUI_LUMEN_RULES_H_
+#define INCLUDE_INTERFACE_GUI_LUMEN_RULES_H_
 #include <cstdint>
 #include <string>
 
 #include "interface/dll.h"
 #include "interface/position_types.h"
 
-///@brief Composition of rules for rendering lumens for gui component.
+/// @brief Composition of rules for rendering lumens for gui component.
 struct DLL_PUBLIC LumenRules {
   /// @brief Name of a package of the lumen this rule refers to.
   std::string package_name{""};
@@ -59,3 +57,5 @@ struct DLL_PUBLIC LumenRules {
   /// Used for special types of lumens (i.e. TextLumen).
   std::string data;
 };
+
+#endif  // INCLUDE_INTERFACE_GUI_LUMEN_RULES_H_

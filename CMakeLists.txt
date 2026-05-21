@@ -18,7 +18,7 @@ include(FetchContent)
 FetchContent_Declare(
     SDL3
     GIT_REPOSITORY https://github.com/libsdl-org/SDL
-    GIT_TAG        3.4.8
+    GIT_TAG        release-3.4.8
     FIND_PACKAGE_ARGS REQUIRED)
 FetchContent_MakeAvailable(SDL3)
 
@@ -26,7 +26,7 @@ FetchContent_MakeAvailable(SDL3)
 FetchContent_Declare(
     SDL3_image
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_image
-    GIT_TAG        3.4.4
+    GIT_TAG        release-3.4.4
     FIND_PACKAGE_ARGS)
 FetchContent_MakeAvailable(SDL3_image)
 
@@ -34,7 +34,7 @@ FetchContent_MakeAvailable(SDL3_image)
 FetchContent_Declare(
     SDL3_ttf
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf
-    GIT_TAG        3.1.0
+    GIT_TAG        release-3.2.2
     FIND_PACKAGE_ARGS)
 FetchContent_MakeAvailable(SDL3_ttf)
 
@@ -128,13 +128,12 @@ if(INTERFACEENGINE_RUN_CPPLINT)
         ${cpplint_SOURCE_DIR}/cpplint.py
         "--recursive"
         "--quiet"
-        "--root" "${CMAKE_CURRENT_SOURCE_DIR}"
-        "${CMAKE_CURRENT_SOURCE_DIR}/tools"
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/interface/lumen/object"
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/interface/lumen/package"
-        # "${CMAKE_CURRENT_SOURCE_DIR}" TODO(necromax): full check
+        "--root=${CMAKE_CURRENT_SOURCE_DIR}"
+        "--filter=-build/include_order"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT "Running cpplint (Google styles tests)"
+        COMMENT "Running cpplint (Google styles tests) for interfaceengine."
     )
 endif()
 

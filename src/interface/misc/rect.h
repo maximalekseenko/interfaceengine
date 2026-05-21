@@ -1,4 +1,7 @@
-#pragma once
+// Copyright 2026 maxim (necromax) alekseenko
+
+#ifndef SRC_INTERFACE_MISC_RECT_H_
+#define SRC_INTERFACE_MISC_RECT_H_
 
 #include "interface/dll.h"
 #include "interface/position_types.h"
@@ -17,3 +20,5 @@ DLL_LOCAL void GetRect(PosPixel* out_x, PosPixel* out_y, PosPixel* out_w,
 DLL_LOCAL bool IsWithinRect(const PosPixel& x, const PosPixel& y,
                             const PosPixel& rect_x, const PosPixel& rect_y,
                             const PosPixel& rect_w, const PosPixel& rect_h);
+
+#endif  // SRC_INTERFACE_MISC_RECT_H_

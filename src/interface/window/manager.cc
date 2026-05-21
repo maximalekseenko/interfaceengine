@@ -18,9 +18,9 @@ void WindowManager::CreateWindow(int32_t width, int32_t height,
 
   flags |= SDL_WINDOW_RESIZABLE;
 
-  this->sdl_window
-      = SDL_CreateWindow("battlefleet",          // TODO title as a variable?
-                         width, height, flags);  // TODO log error of creation
+  this->sdl_window = SDL_CreateWindow(
+      "battlefleet",          // TODO(necromax): title as a variable?
+      width, height, flags);  // TODO(necromax): log error of creation
   this->sdl_renderer = SDL_CreateRenderer(this->sdl_window, NULL);
   SDL_SetRenderDrawBlendMode(this->sdl_renderer, SDL_BLENDMODE_BLEND);
 }

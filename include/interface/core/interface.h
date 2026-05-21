@@ -1,12 +1,10 @@
-/// @file interface.h
-/// @author maxim (necromax) alekseenko
-/// @brief Defines public part of Interface.
+// Copyright 2026 maxim (necromax) alekseenko
 
-#pragma once
+#ifndef INCLUDE_INTERFACE_CORE_INTERFACE_H_
+#define INCLUDE_INTERFACE_CORE_INTERFACE_H_
 
 #include <necroutils/logger.h>
 
-#include <filesystem>
 #include <string>
 
 #include "interface/dll.h"
@@ -50,8 +48,8 @@ class DLL_PUBLIC Interface {
                         bool single_receiver = false);
 
   /// @brief Loads data from a lumen package.
-  /// @param package_name Name of a package to load.
-  void LoadLumens(std::string package_name);
+  /// @param package_path path to a lum package to load.
+  void LoadLumens(std::string package_path);
 
   /// @brief Forces app to quit.
   void Quit();
@@ -68,3 +66,5 @@ class DLL_PUBLIC Interface {
   // std::unique_ptr<Impl> impl;
   Impl* impl;
 };
+
+#endif  // INCLUDE_INTERFACE_CORE_INTERFACE_H_

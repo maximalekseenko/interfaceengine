@@ -7,6 +7,7 @@
 #include <necroutils/logger.h>
 
 #include <cstdint>
+#include <memory>
 
 #include "interface/dll.h"
 #include "interface/window/render_rules.h"
@@ -15,7 +16,7 @@ namespace window {
 
 class DLL_LOCAL WindowManager {
  public:  // -------------------- CONSTRUCTOR --------------------
-  WindowManager(std::shared_ptr<Logger> logger);
+  explicit WindowManager(std::shared_ptr<Logger> logger);
 
  public:  // -------------------- PUBLIC METHODS --------------------
   SDL_Renderer* GetRenderer();

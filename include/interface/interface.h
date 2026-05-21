@@ -1,8 +1,11 @@
-/// @file interface.h
-/// @author maxim (necromax) alekseenko
-/// @brief File for simpler import of this library.
+// Copyright 2026 maxim (necromax) alekseenko
 
-#include "core/interface.h"
-#include "gui/gui_component.h"
-#include "gui/lumen_rules.h"
-#include "position_types.h"
+#ifndef INCLUDE_INTERFACE_INTERFACE_H_
+#define INCLUDE_INTERFACE_INTERFACE_H_
+
+#include "interface/core/interface.h"
+#include "interface/gui/gui_component.h"
+#include "interface/gui/lumen_rules.h"
+#include "interface/position_types.h"
+
+#endif  // INCLUDE_INTERFACE_INTERFACE_H_

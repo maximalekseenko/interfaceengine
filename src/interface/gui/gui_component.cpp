@@ -1,8 +1,9 @@
-/// @file gui_component.cpp
-/// @author maxim (necromax) alekseenko
-/// @brief Implementation of GuiComponent.
+// Copyright 2026 maxim (necromax) alekseenko
 
 #include "interface/gui/gui_component.h"
+
+#include <utility>
+#include <vector>
 
 #include "interface/misc/rect.h"
 
@@ -47,9 +48,9 @@ void GuiComponent::SetVerticalPosition(PosPercent const& percent,
 void GuiComponent::GetSelfRect(PosPixel* out_x, PosPixel* out_y,
                                PosPixel* out_w, PosPixel* out_h) const {
   PosPixel parent_x, parent_y, parent_w, parent_h;
-  if (this->parent != nullptr)
+  if (this->parent != nullptr) {
     this->parent->GetSelfRect(&parent_x, &parent_y, &parent_w, &parent_h);
-  else {
+  } else {
     parent_x = 0;
     parent_y = 0;
     parent_w = 0;
@@ -80,7 +81,7 @@ void GuiComponent::DispatchMouseOver(MouseOverEvent event) {
   if (on_mouse_over) on_mouse_over(event);
   for (auto& child : children) child->DispatchMouseOver(event);
 }
-#include <iostream>
+
 void GuiComponent::DispatchMouseClick(MouseClickEvent event) {
   PosPixel self_x, self_y, self_w, self_h;
   GetSelfRect(&self_x, &self_y, &self_w, &self_h);
