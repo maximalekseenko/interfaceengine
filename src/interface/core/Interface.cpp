@@ -16,7 +16,7 @@
 #include "interface/core/settings.h"
 #include "interface/lumen/manager/manager.h"
 #include "interface/misc/rect.h"
-#include "interface/window_manager/window_manager.h"
+#include "interface/window/manager.h"
 
 struct Interface::Impl {
  public:  // -------------------- CONSTRUCTOR --------------------
@@ -36,7 +36,7 @@ struct Interface::Impl {
   lumen::manager::LumenManager lumen_manager;
 
   /// @brief Window manager for this interface.
-  WindowManager window_manager;
+  window::WindowManager window_manager;
 
   /// @brief Core GUI component.
   GuiComponent::Ptr root_gui_component{std::make_unique<GuiComponent>()};
@@ -64,8 +64,8 @@ struct Interface::Impl {
   /// @param gui_component Component this lumen rule belongs to.
   /// @param lumen_rules Lumen rule to convert.
   /// @return Render rules for rendering a lumen.
-  RenderRules MakeRenderRules(const GuiComponent* gui_component,
-                              const LumenRules& lumen_rules);
+  window::RenderRules MakeRenderRules(const GuiComponent* gui_component,
+                                      const LumenRules& lumen_rules);
 
   void UpdateRootComponentSize();
 };
@@ -210,9 +210,9 @@ void Interface::LoadLumens(std::string packageName) {
   }
 }
 
-RenderRules Interface::Impl::MakeRenderRules(const GuiComponent* gui_component,
-                                             const LumenRules& lumen_rules) {
-  RenderRules new_render_rules;
+window::RenderRules Interface::Impl::MakeRenderRules(
+    const GuiComponent* gui_component, const LumenRules& lumen_rules) {
+  window::RenderRules new_render_rules;
   PosPixel component_x, component_y, component_w, component_h;
   gui_component->GetSelfRect(&component_x, &component_y, &component_w,
                              &component_h);

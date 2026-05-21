@@ -1,8 +1,8 @@
-/// @file window_manager.cpp
-/// @author maxim (necromax) alekseenko
-/// @brief This file contains implementation of WindowManager.
+// Copyright 2026 maxim (necromax) alekseenko
 
-#include "window_manager.h"
+#include "interface/window/manager.h"
+
+namespace window {
 
 WindowManager::WindowManager(std::shared_ptr<Logger> logger) : logger{logger} {}
 
@@ -83,3 +83,5 @@ void WindowManager::RenderTexture(struct SDL_Texture* texture,
 void WindowManager::GetWindowSize(int* out_w, int* out_h) {
   SDL_GetWindowSize(this->sdl_window, out_w, out_h);
 }
+
+}  // namespace window

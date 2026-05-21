@@ -1,13 +1,14 @@
-/// @file render_rules.h
-/// @author maxim (necromax) alekseenko
-/// @brief This file contains definitions for RenderRules.
+// Copyright 2026 maxim (necromax) alekseenko
 
-#pragma once
+#ifndef SRC_INTERFACE_WINDOW_RENDER_RULES_H_
+#define SRC_INTERFACE_WINDOW_RENDER_RULES_H_
 
 #include <string>
 
 #include "interface/dll.h"
 #include "interface/position_types.h"
+
+namespace window {
 
 /// @brief A structure that holds information
 /// for rendering a texture on the window.
@@ -42,3 +43,7 @@ struct DLL_LOCAL RenderRules {
   /// @brief TODO remove
   PosPixel crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
 };
+
+}  // namespace window
+
+#endif  // SRC_INTERFACE_WINDOW_RENDER_RULES_H_

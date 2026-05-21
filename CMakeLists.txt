@@ -69,6 +69,8 @@ target_include_directories(interfaceengine_interface
 # -------------------- COMPILE SUBMODULES --------------------
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/interface/lumen")
 
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/interface/window")
+
 if(INTERFACEENGINE_COMPILE_DEFAULT_LUMC)
     add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tools/lumcompiler")
     add_dependencies(interfaceengine_interface interfaceengine_lumcompiler)
@@ -98,6 +100,7 @@ target_link_libraries(interfaceengine
         SDL3_image::SDL3_image
         SDL3_ttf::SDL3_ttf
         interfaceengine::lumen::manager
+        interfaceengine::window
 )
 
 target_sources(interfaceengine
@@ -105,7 +108,6 @@ target_sources(interfaceengine
         src/interface/misc/rect.cpp
         src/interface/gui/gui_component.cpp
         src/interface/core/interface.cpp
-        src/interface/window_manager/window_manager.cpp
 )
 
 

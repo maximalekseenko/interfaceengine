@@ -1,8 +1,7 @@
-/// @file window_manager.cpp
-/// @author maxim (necromax) alekseenko
-/// @brief This file contains definition of WindowManager.
+// Copyright 2026 maxim (necromax) alekseenko
 
-#pragma once
+#ifndef SRC_INTERFACE_WINDOW_MANAGER_H_
+#define SRC_INTERFACE_WINDOW_MANAGER_H_
 
 #include <SDL3/SDL.h>
 #include <necroutils/logger.h>
@@ -10,7 +9,9 @@
 #include <cstdint>
 
 #include "interface/dll.h"
-#include "render_rules.h"
+#include "interface/window/render_rules.h"
+
+namespace window {
 
 class DLL_LOCAL WindowManager {
  public:  // -------------------- CONSTRUCTOR --------------------
@@ -51,3 +52,7 @@ class DLL_LOCAL WindowManager {
   /// @brief Interface's logger.
   std::shared_ptr<Logger> logger;
 };
+
+}  // namespace window
+
+#endif  // SRC_INTERFACE_WINDOW_MANAGER_H_
