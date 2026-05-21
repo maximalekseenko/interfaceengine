@@ -9,7 +9,7 @@ project(interfaceengine
 
 # -------------------- OPTIONS --------------------
 option(INTERFACEENGINE_RUN_CPPLINT "Run cpplint (Google style tests) when building" ON)
-option(INTERFACEENGINE_COMPILE_LUMCOMPILER "Compile lumcompiler additional tool" ON)
+option(INTERFACEENGINE_COMPILE_DEFAULT_LUMC "Compile default lumcompiler additional tool" ON)
 
 # -------------------- FETCH LIBRARIES --------------------
 include(FetchContent)
@@ -69,7 +69,7 @@ target_include_directories(interfaceengine_interface
 # -------------------- COMPILE SUBMODULES --------------------
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/interface/lumen")
 
-if(INTERFACEENGINE_COMPILE_LUMCOMPILER)
+if(INTERFACEENGINE_COMPILE_DEFAULT_LUMC)
     add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tools/lumcompiler")
     add_dependencies(interfaceengine_interface interfaceengine_lumcompiler)
 endif()
@@ -85,8 +85,9 @@ set_target_properties(interfaceengine PROPERTIES
 )
 
 target_include_directories(interfaceengine
-    PUBLIC 
-        ${PROJECT_SOURCE_DIR}/include
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(interfaceengine
@@ -129,8 +130,48 @@ if(INTERFACEENGINE_RUN_CPPLINT)
         "${CMAKE_CURRENT_SOURCE_DIR}/tools"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/interface/lumen/object"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/interface/lumen/package"
-        # "${CMAKE_CURRENT_SOURCE_DIR}"
+        # "${CMAKE_CURRENT_SOURCE_DIR}" TODO(necromax): full check
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMENT "Running cpplint (Google styles tests)"
     )
 endif()
+
+# -------------------- INSTALLATION --------------------
+# Install library
+install(TARGETS interfaceengine
+    EXPORT interfaceengineTargets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+    INCLUDES DESTINATION include
+)
+
+# Install headers
+install(DIRECTORY include/ DESTINATION include)
+
+# Export for use with find_package
+install(EXPORT interfaceengineTargets
+    FILE interfaceengineTargets.cmake
+    NAMESPACE interfaceengine::
+    DESTINATION lib/cmake/interfaceengine
+)
+
+# -------------------- CONFIG PACKAGE --------------------
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+
+configure_package_config_file(
+    "${CMAKE_CURRENT_LIST_DIR}/cmake/interfaceengine-config.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfig.cmake"
+    INSTALL_DESTINATION lib/cmake/interfaceengine
+)
+
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfigVersion.cmake"
+    DESTINATION lib/cmake/interfaceengine
+)
