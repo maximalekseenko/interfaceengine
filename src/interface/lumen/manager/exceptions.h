@@ -24,6 +24,14 @@ class DLL_LOCAL PackageNotFoundError : public ManagerException {
                          + "\" does not exist.") {}
 };
 
+class DLL_LOCAL PackageAlreadyExistsError : public ManagerException {
+ public:
+  explicit PackageAlreadyExistsError(const std::string& function_name,
+                                     const std::string& package_name)
+      : ManagerException(function_name + ": Package \"" + package_name
+                         + "\" already exists.") {}
+};
+
 }  // namespace lumen::manager
 
 #endif  // SRC_INTERFACE_LUMEN_OBJECT_EXCEPTIONSAAA_H_

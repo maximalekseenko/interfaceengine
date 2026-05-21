@@ -170,10 +170,10 @@ void LumPackage::AddObject(object::Object::Ptr object) {
 
   std::string object_type = object->type();
   std::string object_name = object->name();
-  auto [it, inserted]
+  auto emplace_result
       = loaded_objects_.try_emplace(object_name, std::move(object));
 
-  if (!inserted) {
+  if (!emplace_result.second) {
     throw DuplicateObject("LumPackage got a duplicate object with name \""
                           + object_name + "\".");
   }

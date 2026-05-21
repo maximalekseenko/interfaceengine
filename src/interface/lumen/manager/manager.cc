@@ -23,9 +23,11 @@ void LumenManager::LoadLumPackage(const std::string& path,
 
   new_package->LoadPackage(path, renderer);
 
-  auto [it, inserted] = loader_packages_.try_emplace(new_package->name(),
+  auto emplace_result = loader_packages_.try_emplace(new_package->name(),
                                                      std::move(new_package));
-  // TODO(necromax): throw if exists.
+  if (!emplace_result.second)
+    throw PackageAlreadyExistsError("LumenManager::LoadLumPackage",
+                                    new_package->name());
 }
 
 SDL_Texture* LumenManager::GetLumenTexture(const std::string& package_name,
