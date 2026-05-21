@@ -9,7 +9,7 @@
 #include "interface/lumen/object/exceptions.h"
 #include "interface/lumen/object/lumen_image.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 Object::Ptr Object::CreateOfType(const std::string& type,
                                  const std::string& name) {
@@ -32,4 +32,4 @@ Object::Ptr Object::CreateOfType(const std::string& type,
   return new_object;
 }
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object

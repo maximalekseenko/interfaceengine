@@ -12,7 +12,7 @@
 
 #include "interface/dll.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 class DLL_LOCAL
     Object {  // TODO(necromax): make more const functions among modules
@@ -39,6 +39,6 @@ class DLL_LOCAL
   std::string name_;
 };
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object
 
 #endif  // SRC_INTERFACE_LUMEN_OBJECT_OBJECT_H_

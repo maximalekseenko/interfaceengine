@@ -11,7 +11,7 @@
 #include "interface/dll.h"
 #include "interface/lumen/object/asset.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 class DLL_LOCAL AssetImage : public Asset {
  public:
@@ -38,6 +38,6 @@ class DLL_LOCAL AssetImage : public Asset {
   SDL_Surface* surface_{nullptr};
 };
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object
 
 #endif  // SRC_INTERFACE_LUMEN_OBJECT_ASSET_IMAGE_H_

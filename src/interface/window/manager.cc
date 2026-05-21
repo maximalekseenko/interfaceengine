@@ -2,7 +2,7 @@
 
 #include "interface/window/manager.h"
 
-namespace window {
+namespace interfaceengine::window {
 
 WindowManager::WindowManager(std::shared_ptr<Logger> logger) : logger{logger} {}
 
@@ -84,4 +84,4 @@ void WindowManager::GetWindowSize(int* out_w, int* out_h) {
   SDL_GetWindowSize(this->sdl_window, out_w, out_h);
 }
 
-}  // namespace window
+}  // namespace interfaceengine::window

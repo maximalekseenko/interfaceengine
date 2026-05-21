@@ -8,7 +8,7 @@
 #include "interface/dll.h"
 #include "interface/position_types.h"
 
-namespace window {
+namespace interfaceengine::window {
 
 /// @brief A structure that holds information
 /// for rendering a texture on the window.
@@ -44,6 +44,6 @@ struct DLL_LOCAL RenderRules {
   PosPixel crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
 };
 
-}  // namespace window
+}  // namespace interfaceengine::window
 
 #endif  // SRC_INTERFACE_WINDOW_RENDER_RULES_H_

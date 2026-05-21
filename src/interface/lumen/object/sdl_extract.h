@@ -9,12 +9,12 @@
 
 #include "interface/dll.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 DLL_LOCAL SDL_Surface* ExtractSurface(SDL_Surface* surf, uint32_t extract_x,
                                       uint32_t extract_y, uint32_t extract_w,
                                       uint32_t extract_h);
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object
 
 #endif  // SRC_INTERFACE_LUMEN_OBJECT_SDL_EXTRACT_H_

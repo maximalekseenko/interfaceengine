@@ -10,7 +10,7 @@
 #include "interface/dll.h"
 #include "interface/lumen/object/object.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 class DLL_LOCAL Lumen : public Object {
  public:
@@ -20,6 +20,6 @@ class DLL_LOCAL Lumen : public Object {
   virtual SDL_Texture* GetTexture(std::string data) const = 0;
 };
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object
 
 #endif  // SRC_INTERFACE_LUMEN_OBJECT_LUMEN_H_

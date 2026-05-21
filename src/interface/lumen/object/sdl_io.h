@@ -9,10 +9,10 @@
 
 #include "interface/dll.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 DLL_LOCAL SDL_IOStream* OpenIOFromIStream(std::istream& cppStream);
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object
 
 #endif  // SRC_INTERFACE_LUMEN_OBJECT_SDL_IO_H_

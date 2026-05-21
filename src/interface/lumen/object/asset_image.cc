@@ -13,7 +13,7 @@
 #include "interface/lumen/object/exceptions.h"
 #include "interface/lumen/object/sdl_io.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 AssetImage::~AssetImage() {
   if (surface_ != nullptr) SDL_DestroySurface(surface_);
@@ -70,4 +70,4 @@ void AssetImage::Load(const std::string& meta, const getFileFn& get_file_fn,
                           + file_name + "\" due to:\n" + SDL_GetError());
 }
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object

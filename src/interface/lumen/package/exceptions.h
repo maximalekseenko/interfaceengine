@@ -8,7 +8,7 @@
 
 #include "interface/dll.h"
 
-namespace lumen::package {
+namespace interfaceengine::lumen::package {
 
 class DLL_LOCAL LumPackageException : public std::runtime_error {
  public:
@@ -33,6 +33,6 @@ DEFINE_LUM_PACKAGE_EXCEPTION(ObjectNotFound)
 
 #undef DEFINE_LUM_PACKAGE_EXCEPTION
 
-}  // namespace lumen::package
+}  // namespace interfaceengine::lumen::package
 
 #endif  // SRC_INTERFACE_LUMEN_PACKAGE_EXCEPTIONS_H_

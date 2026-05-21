@@ -8,7 +8,7 @@
 
 #include "interface/dll.h"
 
-namespace lumen::manager {
+namespace interfaceengine::lumen::manager {
 
 class DLL_LOCAL ManagerException : public std::runtime_error {
  public:
@@ -32,6 +32,6 @@ class DLL_LOCAL PackageAlreadyExistsError : public ManagerException {
                          + "\" already exists.") {}
 };
 
-}  // namespace lumen::manager
+}  // namespace interfaceengine::lumen::manager
 
 #endif  // SRC_INTERFACE_LUMEN_MANAGER_EXCEPTIONS_H_

@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace lumen::package {
+namespace interfaceengine::lumen::package {
 
 using Magic = char[4];
 using Version = uint32_t;
@@ -13,6 +13,6 @@ using ObjectCount = uint32_t;
 using MetaSize = uint32_t;
 using ObjectSize = uint32_t;
 
-}  // namespace lumen::package
+}  // namespace interfaceengine::lumen::package
 
 #endif  // SRC_INTERFACE_LUMEN_PACKAGE_PACKAGE_TYPES_H_

@@ -9,7 +9,7 @@
 
 #include "interface/dll.h"
 
-namespace lumen::package {
+namespace interfaceengine::lumen::package {
 
 struct DLL_LOCAL PackageHeader {
   using Magic = std::array<char, 4>;
@@ -25,6 +25,6 @@ struct DLL_LOCAL PackageHeader {
   ElemCount meta_lines_count = 0;
 };
 
-}  // namespace lumen::package
+}  // namespace interfaceengine::lumen::package
 
 #endif  // SRC_INTERFACE_LUMEN_PACKAGE_PACKAGE_HEADER_H_

@@ -8,7 +8,7 @@
 
 #include "interface/dll.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 class DLL_LOCAL ObjectException : public std::runtime_error {
  public:
@@ -16,6 +16,6 @@ class DLL_LOCAL ObjectException : public std::runtime_error {
       : std::runtime_error(message) {}
 };
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object
 
 #endif  // SRC_INTERFACE_LUMEN_OBJECT_EXCEPTIONS_H_

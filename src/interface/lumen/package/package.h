@@ -9,7 +9,7 @@
 #include "interface/dll.h"
 #include "interface/lumen/object/object.h"
 
-namespace lumen::package {
+namespace interfaceengine::lumen::package {
 
 class DLL_LOCAL LumPackage {
  public:
@@ -36,6 +36,6 @@ class DLL_LOCAL LumPackage {
   std::unordered_map<std::string, object::Object::Ptr> loaded_objects_;
 };
 
-}  // namespace lumen::package
+}  // namespace interfaceengine::lumen::package
 
 #endif  // SRC_INTERFACE_LUMEN_PACKAGE_PACKAGE_H_

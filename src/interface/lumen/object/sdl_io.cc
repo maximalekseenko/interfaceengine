@@ -6,7 +6,7 @@
 
 #include <istream>
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 static size_t SDLCALL StreamRead(void* userdata, void* ptr, size_t size,
                                  SDL_IOStatus* status) {
@@ -66,4 +66,4 @@ SDL_IOStream* OpenIOFromIStream(std::istream& cppStream) {
   return SDL_OpenIO(&iface, &cppStream);
 }
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object

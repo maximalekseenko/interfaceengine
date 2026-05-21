@@ -12,7 +12,7 @@
 #include "interface/dll.h"
 #include "interface/window/render_rules.h"
 
-namespace window {
+namespace interfaceengine::window {
 
 class DLL_LOCAL WindowManager {
  public:  // -------------------- CONSTRUCTOR --------------------
@@ -54,6 +54,6 @@ class DLL_LOCAL WindowManager {
   std::shared_ptr<Logger> logger;
 };
 
-}  // namespace window
+}  // namespace interfaceengine::window
 
 #endif  // SRC_INTERFACE_WINDOW_MANAGER_H_

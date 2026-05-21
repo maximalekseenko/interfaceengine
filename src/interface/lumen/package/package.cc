@@ -16,7 +16,7 @@
 #include "interface/lumen/package/exceptions.h"
 #include "interface/lumen/package/package_header.h"
 
-namespace lumen::package {
+namespace interfaceengine::lumen::package {
 
 struct FileLocation {
   std::streampos pos;
@@ -179,4 +179,4 @@ void LumPackage::AddObject(object::Object::Ptr object) {
   }
 }
 
-}  // namespace lumen::package
+}  // namespace interfaceengine::lumen::package

@@ -17,7 +17,7 @@
 #include "interface/lumen/manager/exceptions.h"
 #include "interface/lumen/package/package.h"
 
-namespace lumen::manager {
+namespace interfaceengine::lumen::manager {
 
 void LumenManager::LoadLumPackage(const std::string& path,
                                   SDL_Renderer* renderer) {
@@ -47,4 +47,4 @@ void LumenManager::RemovePackage(const std::string& package_name) {
     throw PackageNotFoundError("LumenManager::RemovePackage", package_name);
 }
 
-}  // namespace lumen::manager
+}  // namespace interfaceengine::lumen::manager

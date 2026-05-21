@@ -15,7 +15,7 @@
 #include "interface/lumen/object/exceptions.h"
 #include "interface/lumen/object/sdl_extract.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 LumenImage::~LumenImage() {
   if (texture_ != nullptr) SDL_DestroyTexture(texture_);
@@ -82,4 +82,4 @@ void LumenImage::Load(const std::string& meta, const getFileFn& get_file_fn,
     SDL_SetTextureScaleMode(texture_, SDL_SCALEMODE_NEAREST);
 }
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object

@@ -9,13 +9,13 @@
 #include "interface/dll.h"
 #include "interface/lumen/object/object.h"
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 class DLL_LOCAL Asset : public Object {
  public:
   virtual ~Asset() = default;
 };
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object
 
 #endif  // SRC_INTERFACE_LUMEN_OBJECT_ASSET_H_

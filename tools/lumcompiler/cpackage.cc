@@ -101,8 +101,8 @@ void LumCompilingPackage::CompileLumFile(const std::string& lumdata_path,
           },
           renderer);
       valid_meta_lines.push_back(lumdata_line);
-    } catch (const lumen::package::MetaEmtpyLine& e) {
-    } catch (const lumen::package::MetaCommentedLine& e) {
+    } catch (const interfaceengine::lumen::package::MetaEmtpyLine& e) {
+    } catch (const interfaceengine::lumen::package::MetaCommentedLine& e) {
     } catch (const std::exception& e) {
       col_exc.Add(std::make_exception_ptr(InvalidLumdataError(
           "Failed to process line " + std::to_string(line_index) + " due to:\n"
@@ -124,7 +124,7 @@ void LumCompilingPackage::CompileLumFile(const std::string& lumdata_path,
   }
 
   // Write header.
-  lumen::package::PackageHeader header{
+  interfaceengine::lumen::package::PackageHeader header{
       .magic{'L', 'U', 'M', '0'},
       .version = 0,
       .files_count = required_file_names.size(),
@@ -138,8 +138,8 @@ void LumCompilingPackage::CompileLumFile(const std::string& lumdata_path,
   // Write files.
   for (const auto& file_name : required_file_names) {
     std::ifstream file_stream(assets_folder + '/' + file_name);
-    lumen::package::PackageHeader::FileNameSize file_name_size;
-    lumen::package::PackageHeader::FileSize file_size;
+    interfaceengine::lumen::package::PackageHeader::FileNameSize file_name_size;
+    interfaceengine::lumen::package::PackageHeader::FileSize file_size;
 
     file_name_size = file_name.size();
 
@@ -161,7 +161,7 @@ void LumCompilingPackage::CompileLumFile(const std::string& lumdata_path,
 
   // Write meta.
   for (const auto& meta_line : valid_meta_lines) {
-    lumen::package::PackageHeader::MetaSize meta_line_size;
+    interfaceengine::lumen::package::PackageHeader::MetaSize meta_line_size;
 
     meta_line_size = meta_line.size();
 

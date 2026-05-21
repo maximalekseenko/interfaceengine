@@ -13,7 +13,7 @@
 #include "interface/dll.h"
 #include "interface/lumen/package/package.h"
 
-namespace lumen::manager {
+namespace interfaceengine::lumen::manager {
 
 /// @brief A class for loading and managing lumens.
 class DLL_LOCAL LumenManager {
@@ -51,6 +51,6 @@ class DLL_LOCAL LumenManager {
   std::unordered_map<std::string, LumPackagePtr> loader_packages_;
 };
 
-}  // namespace lumen::manager
+}  // namespace interfaceengine::lumen::manager
 
 #endif  // SRC_INTERFACE_LUMEN_MANAGER_MANAGER_H_

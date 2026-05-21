@@ -32,10 +32,10 @@ struct Interface::Impl {
   std::shared_ptr<Logger> logger;
 
   /// @brief Lumen manager for this interface.
-  lumen::manager::LumenManager lumen_manager;
+  interfaceengine::lumen::manager::LumenManager lumen_manager;
 
   /// @brief Window manager for this interface.
-  window::WindowManager window_manager;
+  interfaceengine::window::WindowManager window_manager;
 
   /// @brief Core GUI component.
   GuiComponent::Ptr root_gui_component{std::make_unique<GuiComponent>()};
@@ -63,8 +63,8 @@ struct Interface::Impl {
   /// @param gui_component Component this lumen rule belongs to.
   /// @param lumen_rules Lumen rule to convert.
   /// @return Render rules for rendering a lumen.
-  window::RenderRules MakeRenderRules(const GuiComponent* gui_component,
-                                      const LumenRules& lumen_rules);
+  interfaceengine::window::RenderRules MakeRenderRules(
+      const GuiComponent* gui_component, const LumenRules& lumen_rules);
 
   void UpdateRootComponentSize();
 };
@@ -205,9 +205,9 @@ void Interface::LoadLumens(std::string package_path) {
   }
 }
 
-window::RenderRules Interface::Impl::MakeRenderRules(
+interfaceengine::window::RenderRules Interface::Impl::MakeRenderRules(
     const GuiComponent* gui_component, const LumenRules& lumen_rules) {
-  window::RenderRules new_render_rules;
+  interfaceengine::window::RenderRules new_render_rules;
   PosPixel component_x, component_y, component_w, component_h;
   gui_component->GetSelfRect(&component_x, &component_y, &component_w,
                              &component_h);

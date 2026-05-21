@@ -7,7 +7,7 @@
 
 #include <cstdint>
 
-namespace lumen::object {
+namespace interfaceengine::lumen::object {
 
 SDL_Surface* ExtractSurface(SDL_Surface* surf, uint32_t extract_x,
                             uint32_t extract_y, uint32_t extract_w,
@@ -26,4 +26,4 @@ SDL_Surface* ExtractSurface(SDL_Surface* surf, uint32_t extract_x,
       surf->pitch);
 }
 
-}  // namespace lumen::object
+}  // namespace interfaceengine::lumen::object
