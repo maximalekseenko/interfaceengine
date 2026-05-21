@@ -95,12 +95,13 @@ target_include_directories(interfaceengine
 target_link_libraries(interfaceengine
     PRIVATE
         interfaceengine_interface
-        necroutils::necroutils
         SDL3::SDL3
         SDL3_image::SDL3_image
         SDL3_ttf::SDL3_ttf
         interfaceengine::lumen::manager
         interfaceengine::window
+    PUBLIC
+        necroutils::necroutils
 )
 
 target_sources(interfaceengine
