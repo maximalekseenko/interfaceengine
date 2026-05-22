@@ -157,11 +157,9 @@ void Interface::Impl::Render() {
 
     // Apply rendering.
     this->window_manager.ApplyRender();
-
   } catch (const std::exception& e) {
     logger.Log(std::string("Had failed a render cycle due to:\n") + e.what(),
                LogLevel::Error);
-
   } catch (...) {
     logger.Log(
         "Had failed a render cycle due to:\n"

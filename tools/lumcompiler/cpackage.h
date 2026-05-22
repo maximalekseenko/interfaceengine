@@ -12,7 +12,7 @@
 
 namespace lumcompiler {
 
-class DLL_LOCAL LumCompilingPackage
+class INTERFACE_INTERNAL LumCompilingPackage
     : public interfaceengine::lumen::package::LumPackage {
  public:
   struct CompileParameters {
