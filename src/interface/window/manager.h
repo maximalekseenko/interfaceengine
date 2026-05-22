@@ -4,7 +4,6 @@
 #define SRC_INTERFACE_WINDOW_MANAGER_H_
 
 #include <SDL3/SDL.h>
-#include <necroutils/logger.h>
 
 #include <cstdint>
 #include <memory>
@@ -16,10 +15,10 @@ namespace interfaceengine::window {
 
 class DLL_LOCAL WindowManager {
  public:  // -------------------- CONSTRUCTOR --------------------
-  explicit WindowManager(std::shared_ptr<Logger> logger);
+  WindowManager() = default;
 
  public:  // -------------------- PUBLIC METHODS --------------------
-  SDL_Renderer* GetRenderer();
+  SDL_Renderer* renderer() { return sdl_renderer_; }
 
   /// @brief Creates a window of set size.
   /// @param width The width of the window created.
@@ -45,13 +44,10 @@ class DLL_LOCAL WindowManager {
 
  private:  // -------------------- PRIVATE MEMBERS --------------------
   /// @brief SDL window.
-  SDL_Window* sdl_window{nullptr};
+  SDL_Window* sdl_window_{nullptr};
 
   /// @brief SDL renderer.
-  SDL_Renderer* sdl_renderer{nullptr};
-
-  /// @brief Interface's logger.
-  std::shared_ptr<Logger> logger;
+  SDL_Renderer* sdl_renderer_{nullptr};
 };
 
 }  // namespace interfaceengine::window

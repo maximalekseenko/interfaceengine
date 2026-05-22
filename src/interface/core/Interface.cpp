@@ -69,9 +69,7 @@ struct Interface::Impl {
   void UpdateRootComponentSize();
 };
 
-Interface::Impl::Impl()
-    : logger{std::make_shared<Logger>("InterfaceEngine")},
-      window_manager{logger} {}
+Interface::Impl::Impl() : logger{std::make_shared<Logger>("InterfaceEngine")} {}
 
 Interface::Interface() : impl{new Impl()} { this->impl->self = this; }
 Interface::~Interface() { delete this->impl; }
@@ -191,7 +189,7 @@ void Interface::Impl::HandleEvents() {
 }
 
 void Interface::LoadLumens(std::string package_path) {
-  SDL_Renderer* renderer = this->impl->window_manager.GetRenderer();
+  SDL_Renderer* renderer = this->impl->window_manager.renderer();
 
   try {
     this->impl->lumen_manager.LoadLumPackage(package_path, renderer);
