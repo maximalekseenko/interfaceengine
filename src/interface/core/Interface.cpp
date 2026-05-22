@@ -29,7 +29,7 @@ struct Interface::Impl {
   InterfaceSettings settings;
 
   /// @brief Logger for this interface.
-  std::shared_ptr<Logger> logger;
+  Logger logger;
 
   /// @brief Lumen manager for this interface.
   interfaceengine::lumen::manager::LumenManager lumen_manager;
@@ -69,93 +69,105 @@ struct Interface::Impl {
   void UpdateRootComponentSize();
 };
 
-Interface::Impl::Impl() : logger{std::make_shared<Logger>("InterfaceEngine")} {}
+Interface::Impl::Impl() : logger("InterfaceEngine") {}
 
-Interface::Interface() : impl{new Impl()} { this->impl->self = this; }
-Interface::~Interface() { delete this->impl; }
+Interface::Interface() : impl_{new Impl()} { impl_->self = this; }
+Interface::~Interface() { delete impl_; }
 
 void Interface::Initialize() {
   // Initialize SDL.
   if (!SDL_Init(SDL_INIT_VIDEO))
-    impl->logger->Log("SDL had failed to initialize", LogLevel::Error);
+    impl_->logger.Log("SDL had failed to initialize", LogLevel::Error);
   if (!TTF_Init())
-    impl->logger->Log("SDL_TTF had failed to initialize", LogLevel::Error);
+    impl_->logger.Log("SDL_TTF had failed to initialize", LogLevel::Error);
 
-  this->impl->window_manager.CreateWindow();
-  this->impl->settings.executable_path = SDL_GetBasePath();
+  impl_->window_manager.CreateWindow();
+  impl_->settings.executable_path = SDL_GetBasePath();
 
-  impl->logger->Log("Interface initialized.", LogLevel::Debug);
+  impl_->logger.Log("Interface initialized.", LogLevel::Debug);
 }
 
 void Interface::Run() {
-  this->impl->is_running = true;
-  while (this->impl->is_running) {
-    this->impl->HandleEvents();
-    this->impl->Render();
-    this->impl->TickDelay();
+  impl_->is_running = true;
+  while (impl_->is_running) {
+    impl_->HandleEvents();
+    impl_->Render();
+    impl_->TickDelay();
   }
 }
 
 void Interface::SetRootGuiComponent(GuiComponent::Ptr gui_component) {
-  this->impl->root_gui_component = std::move(gui_component);
+  impl_->root_gui_component = std::move(gui_component);
 
-  this->impl->UpdateRootComponentSize();
+  impl_->UpdateRootComponentSize();
 }
 
 void Interface::SendMessageToGui(GuiComponent::Message message,
                                  GuiComponent::Id receiver_id,
                                  bool single_receiver) {
-  impl->root_gui_component->DispatchMessage(message, receiver_id,
-                                            single_receiver);
+  impl_->root_gui_component->DispatchMessage(message, receiver_id,
+                                             single_receiver);
 }
 
-void Interface::Quit() { this->impl->is_running = false; }
+void Interface::Quit() { impl_->is_running = false; }
 
 void Interface::AddLogSink(Logger::SinkPtr sink) {
-  impl->logger->AddSink(sink);
+  impl_->logger.AddSink(sink);
 }
 
 void Interface::Impl::Render() {
-  // Clear past.
-  this->window_manager.ClearRender();
+  try {
+    // Clear past.
+    this->window_manager.ClearRender();
 
-  // Initialize a stack with gui components yet to render.
-  std::stack<GuiComponent*> stack_to_render;
-  stack_to_render.push(root_gui_component.get());
+    // Initialize a stack with gui components yet to render.
+    std::stack<GuiComponent*> stack_to_render;
+    stack_to_render.push(root_gui_component.get());
 
-  // Iterate through rendering stack.
-  CollectiveException col_exc(
-      "Had finished rendering with following exceptions:");
+    // Iterate through rendering stack.
+    CollectiveException col_exc(
+        "Had finished rendering with following exceptions:");
 
-  while (!stack_to_render.empty()) {
-    try {
-      // Extract next gui component to render.
-      GuiComponent* gui_component_to_render = stack_to_render.top();
-      stack_to_render.pop();
+    while (!stack_to_render.empty()) {
+      try {
+        // Extract next gui component to render.
+        GuiComponent* gui_component_to_render = stack_to_render.top();
+        stack_to_render.pop();
 
-      // Iterate and render lumen rules of that gui component.
-      auto lumen_rules_list = gui_component_to_render->GetLumenRules();
-      for (const LumenRules& lumen_rules_to_render : lumen_rules_list) {
-        this->window_manager.RenderTexture(
-            this->lumen_manager.GetLumenTexture(
-                lumen_rules_to_render.package_name,
-                lumen_rules_to_render.lumen_name, lumen_rules_to_render.data),
-            this->MakeRenderRules(gui_component_to_render,
-                                  lumen_rules_to_render));
+        // Iterate and render lumen rules of that gui component.
+        auto lumen_rules_list = gui_component_to_render->GetLumenRules();
+        for (const LumenRules& lumen_rules_to_render : lumen_rules_list) {
+          this->window_manager.RenderTexture(
+              this->lumen_manager.GetLumenTexture(
+                  lumen_rules_to_render.package_name,
+                  lumen_rules_to_render.lumen_name, lumen_rules_to_render.data),
+              this->MakeRenderRules(gui_component_to_render,
+                                    lumen_rules_to_render));
+        }
+
+        // Add children to stack.
+        for (auto& component_child : gui_component_to_render->children) {
+          stack_to_render.push(component_child.get());
+        }
+      } catch (...) {
+        col_exc.Add(std::current_exception());
       }
-
-      // Add children to stack.
-      for (auto& component_child : gui_component_to_render->children) {
-        stack_to_render.push(component_child.get());
-      }
-    } catch (...) {
-      col_exc.Add(std::current_exception());
     }
-  }
-  if (!col_exc.empty()) logger->Log(col_exc.what(), LogLevel::Error);
+    if (!col_exc.empty()) logger.Log(col_exc.what(), LogLevel::Error);
 
-  // Apply rendering.
-  this->window_manager.ApplyRender();
+    // Apply rendering.
+    this->window_manager.ApplyRender();
+
+  } catch (const std::exception& e) {
+    logger.Log(std::string("Had failed a render cycle due to:\n") + e.what(),
+               LogLevel::Error);
+
+  } catch (...) {
+    logger.Log(
+        "Had failed a render cycle due to:\n"
+        "Unknown error.",
+        LogLevel::Error);
+  }
 }
 
 void Interface::Impl::TickDelay() {
@@ -189,15 +201,15 @@ void Interface::Impl::HandleEvents() {
 }
 
 void Interface::LoadLumens(std::string package_path) {
-  SDL_Renderer* renderer = this->impl->window_manager.renderer();
+  SDL_Renderer* renderer = impl_->window_manager.renderer();
 
   try {
-    this->impl->lumen_manager.LoadLumPackage(package_path, renderer);
+    impl_->lumen_manager.LoadLumPackage(package_path, renderer);
   } catch (const std::exception& e) {
-    impl->logger->Log(std::string("Failed to load lum package:") + e.what(),
+    impl_->logger.Log(std::string("Failed to load lum package:") + e.what(),
                       LogLevel::Error);
   } catch (...) {
-    impl->logger->Log("Interface::LoadLumens",
+    impl_->logger.Log("Interface::LoadLumens",
                       LogLevel::Error);  // TODO(necromax): fix all thisd
                                          // sdifhsdfiouhfsdiuasdfhgSDO!
   }

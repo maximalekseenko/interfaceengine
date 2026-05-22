@@ -20,7 +20,7 @@
 ///
 /// @note Must be run in main thread.
 class DLL_PUBLIC Interface {
- public:  // -------------------- CONSTRUCTOR --------------------
+ public:  // -------------------- CONSTRUCTORS --------------------
   Interface();
   ~Interface();
 
@@ -64,7 +64,7 @@ class DLL_PUBLIC Interface {
 
   /// @brief The pointer to private implementation of this interface.
   // std::unique_ptr<Impl> impl;
-  Impl* impl;
+  Impl* impl_;
 };
 
 #endif  // INCLUDE_INTERFACE_CORE_INTERFACE_H_
