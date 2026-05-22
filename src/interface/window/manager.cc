@@ -2,29 +2,27 @@
 
 #include "interface/window/manager.h"
 
-#include <string>
+#include "interface/window/exceptions.h"
 
 namespace interfaceengine::window {
 
 void WindowManager::CreateWindow(int32_t width, int32_t height,
                                  uint64_t flags) {
   if (sdl_window_ != nullptr)
-    throw std::runtime_error(
-        "Trying to create a window when once already exits");
+    throw InitializationError("self", "WindowManager is already initialized.");
 
   flags |= SDL_WINDOW_RESIZABLE;
 
   // TODO(necromax): title as a variable?
-  // TODO(necromax): exceptions?
   sdl_window_ = SDL_CreateWindow("battlefleet", width, height, flags);
 
   if (sdl_window_ == nullptr)
-    throw std::runtime_error("Had failed to create a window.");
+    throw InitializationError("window", SDL_GetError());
 
   sdl_renderer_ = SDL_CreateRenderer(sdl_window_, NULL);
 
   if (sdl_window_ == nullptr)
-    throw std::runtime_error("Had failed to create a renderer.");
+    throw InitializationError("renderer", SDL_GetError());
 
   SDL_SetRenderDrawBlendMode(sdl_renderer_, SDL_BLENDMODE_BLEND);
 }
@@ -81,9 +79,7 @@ void WindowManager::RenderTexture(struct SDL_Texture* texture,
                                               &rotation_center, SDL_FLIP_NONE);
   }
 
-  if (!render_success)
-    throw std::runtime_error(std::string("Had failed to render:\n")
-                             + SDL_GetError());
+  if (!render_success) throw RenderError(SDL_GetError());
 }
 
 void WindowManager::GetWindowSize(int* out_w, int* out_h) {
