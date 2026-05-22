@@ -12,7 +12,7 @@ namespace interfaceengine::window {
 
 /// @brief A structure that holds information
 /// for rendering a texture on the window.
-struct DLL_LOCAL RenderRules {
+struct INTERFACE_INTERNAL RenderRules {
   /// @brief Position of top left corner of the texture on the screen to be
   /// rendered at.
   ///

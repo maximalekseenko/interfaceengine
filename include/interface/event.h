@@ -8,11 +8,11 @@
 #include "interface/dll.h"
 #include "interface/position_types.h"
 
-struct DLL_PUBLIC MouseOverEvent {
+struct INTERFACE_API MouseOverEvent {
   PosPixel x, y;
 };
 
-struct DLL_PUBLIC MouseClickEvent {
+struct INTERFACE_API MouseClickEvent {
   bool is_down;
   uint8_t button;
   PosPixel x, y;

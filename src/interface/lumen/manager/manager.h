@@ -16,7 +16,7 @@
 namespace interfaceengine::lumen::manager {
 
 /// @brief A class for loading and managing lumens.
-class DLL_LOCAL LumenManager {
+class INTERFACE_INTERNAL LumenManager {
  public:  // -------------------- TYPES --------------------
   using LumPackagePtr = std::unique_ptr<package::LumPackage>;
 

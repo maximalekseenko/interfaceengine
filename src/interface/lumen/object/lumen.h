@@ -12,7 +12,7 @@
 
 namespace interfaceengine::lumen::object {
 
-class DLL_LOCAL Lumen : public Object {
+class INTERFACE_INTERNAL Lumen : public Object {
  public:
   virtual ~Lumen() = default;
 

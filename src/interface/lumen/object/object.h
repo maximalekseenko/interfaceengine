@@ -14,7 +14,7 @@
 
 namespace interfaceengine::lumen::object {
 
-class DLL_LOCAL
+class INTERFACE_INTERNAL
     Object {  // TODO(necromax): make more const functions among modules
  public:
   using Ptr = std::unique_ptr<Object>;

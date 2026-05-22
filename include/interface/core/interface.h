@@ -19,7 +19,7 @@
 /// Set root GUI component with `SetRootGuiComponent()` function.
 ///
 /// @note Must be run in main thread.
-class DLL_PUBLIC Interface {
+class INTERFACE_API Interface {
  public:  // -------------------- CONSTRUCTORS --------------------
   Interface();
   ~Interface();

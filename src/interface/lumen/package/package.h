@@ -11,7 +11,7 @@
 
 namespace interfaceengine::lumen::package {
 
-class DLL_LOCAL LumPackage {
+class INTERFACE_INTERNAL LumPackage {
  public:
   LumPackage() = default;
 

@@ -11,9 +11,11 @@
 
 namespace interfaceengine::lumen::object {
 
-DLL_LOCAL SDL_Surface* ExtractSurface(SDL_Surface* surf, uint32_t extract_x,
-                                      uint32_t extract_y, uint32_t extract_w,
-                                      uint32_t extract_h);
+INTERFACE_INTERNAL SDL_Surface* ExtractSurface(SDL_Surface* surf,
+                                               uint32_t extract_x,
+                                               uint32_t extract_y,
+                                               uint32_t extract_w,
+                                               uint32_t extract_h);
 
 }  // namespace interfaceengine::lumen::object
 

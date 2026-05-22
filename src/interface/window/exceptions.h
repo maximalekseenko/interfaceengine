@@ -10,13 +10,13 @@
 
 namespace interfaceengine::window {
 
-class DLL_LOCAL ManagerException : public std::runtime_error {
+class INTERFACE_INTERNAL ManagerException : public std::runtime_error {
  public:
   explicit ManagerException(const std::string& message)
       : std::runtime_error(message) {}
 };
 
-class DLL_LOCAL InitializationError : public ManagerException {
+class INTERFACE_INTERNAL InitializationError : public ManagerException {
  public:
   explicit InitializationError(const std::string& subject,
                                const std::string& reason)
@@ -24,7 +24,7 @@ class DLL_LOCAL InitializationError : public ManagerException {
                          + " due to:\n" + reason) {}
 };
 
-class DLL_LOCAL RenderError : public ManagerException {
+class INTERFACE_INTERNAL RenderError : public ManagerException {
  public:
   explicit RenderError(const std::string& reason)
       : ManagerException("WindowManager had failed to render a lumen due to:\n"

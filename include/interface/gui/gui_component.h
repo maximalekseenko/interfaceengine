@@ -26,7 +26,7 @@
 ///
 /// - Set the `get_lumen_rules` to a custom function.
 /// It will be called
-class DLL_PUBLIC GuiComponent {
+class INTERFACE_API GuiComponent {
  public:  // -------------------- CONSTRUCTOR --------------------
   GuiComponent() = default;
 

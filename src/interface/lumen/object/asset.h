@@ -11,7 +11,7 @@
 
 namespace interfaceengine::lumen::object {
 
-class DLL_LOCAL Asset : public Object {
+class INTERFACE_INTERNAL Asset : public Object {
  public:
   virtual ~Asset() = default;
 };

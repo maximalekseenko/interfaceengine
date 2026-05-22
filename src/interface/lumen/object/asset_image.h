@@ -13,7 +13,7 @@
 
 namespace interfaceengine::lumen::object {
 
-class DLL_LOCAL AssetImage : public Asset {
+class INTERFACE_INTERNAL AssetImage : public Asset {
  public:
   struct SurfaceData {
     bool is_pixel{false};

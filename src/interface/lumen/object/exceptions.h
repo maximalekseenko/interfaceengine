@@ -10,7 +10,7 @@
 
 namespace interfaceengine::lumen::object {
 
-class DLL_LOCAL ObjectException : public std::runtime_error {
+class INTERFACE_INTERNAL ObjectException : public std::runtime_error {
  public:
   explicit ObjectException(const std::string& message)
       : std::runtime_error(message) {}

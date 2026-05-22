@@ -11,7 +11,7 @@
 
 namespace interfaceengine::lumen::package {
 
-struct DLL_LOCAL PackageHeader {
+struct INTERFACE_INTERNAL PackageHeader {
   using Magic = std::array<char, 4>;
   using MetaSize = std::uint32_t;
   using FileSize = std::uint64_t;

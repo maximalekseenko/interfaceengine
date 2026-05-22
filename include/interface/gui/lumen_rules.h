@@ -9,7 +9,7 @@
 #include "interface/position_types.h"
 
 /// @brief Composition of rules for rendering lumens for gui component.
-struct DLL_PUBLIC LumenRules {
+struct INTERFACE_API LumenRules {
   /// @brief Name of a package of the lumen this rule refers to.
   std::string package_name{""};
 

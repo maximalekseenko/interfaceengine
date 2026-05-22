@@ -4,28 +4,28 @@
 #define INCLUDE_INTERFACE_DLL_H_
 
 #if defined(_WIN32) || defined(__CYGWIN__)
-#if defined(BUILDING_DLL)
-#if defined(__GNUC__)
-#define DLL_PUBLIC __attribute__((dllexport))
+  #if defined(INTERFACE_LOCAL)
+    #if defined(__GNUC__)
+      #define INTERFACE_API __attribute__((dllexport))
+    #else
+      #define INTERFACE_API __declspec(dllexport)
+    #endif
+  #else
+    #if defined(__GNUC__)
+      #define INTERFACE_API __attribute__((dllimport))
+    #else
+      #define INTERFACE_API __declspec(dllimport)
+    #endif
+  #endif
+  #define INTERFACE_INTERNAL
 #else
-#define DLL_PUBLIC __declspec(dllexport)
-#endif
-#else
-#if defined(__GNUC__)
-#define DLL_PUBLIC __attribute__((dllimport))
-#else
-#define DLL_PUBLIC __declspec(dllimport)
-#endif
-#endif
-#define DLL_LOCAL
-#else
-#if __GNUC__ >= 4
-#define DLL_PUBLIC __attribute__((visibility("default")))
-#define DLL_LOCAL __attribute__((visibility("hidden")))
-#else
-#define DLL_PUBLIC
-#define DLL_LOCAL
-#endif
+  #if __GNUC__ >= 4
+    #define INTERFACE_API __attribute__((visibility("default")))
+    #define INTERFACE_INTERNAL __attribute__((visibility("hidden")))
+  #else
+    #define INTERFACE_API
+    #define INTERFACE_INTERNAL
+  #endif
 #endif
 
 #endif  // INCLUDE_INTERFACE_DLL_H_

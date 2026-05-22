@@ -10,13 +10,13 @@
 
 namespace interfaceengine::lumen::manager {
 
-class DLL_LOCAL ManagerException : public std::runtime_error {
+class INTERFACE_INTERNAL ManagerException : public std::runtime_error {
  public:
   explicit ManagerException(const std::string& message)
       : std::runtime_error(message) {}
 };
 
-class DLL_LOCAL PackageNotFoundError : public ManagerException {
+class INTERFACE_INTERNAL PackageNotFoundError : public ManagerException {
  public:
   explicit PackageNotFoundError(const std::string& function_name,
                                 const std::string& package_name)
@@ -24,7 +24,7 @@ class DLL_LOCAL PackageNotFoundError : public ManagerException {
                          + "\" does not exist.") {}
 };
 
-class DLL_LOCAL PackageAlreadyExistsError : public ManagerException {
+class INTERFACE_INTERNAL PackageAlreadyExistsError : public ManagerException {
  public:
   explicit PackageAlreadyExistsError(const std::string& function_name,
                                      const std::string& package_name)

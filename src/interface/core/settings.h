@@ -8,7 +8,7 @@
 #include "interface/dll.h"
 
 /// @brief A structure that contains settings for interface instance.
-class DLL_LOCAL InterfaceSettings {
+class INTERFACE_INTERNAL InterfaceSettings {
  public:
   /// @brief A path to the executable file.
   std::string executable_path{""};

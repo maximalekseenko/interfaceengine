@@ -10,17 +10,17 @@
 
 namespace interfaceengine::lumen::package {
 
-class DLL_LOCAL LumPackageException : public std::runtime_error {
+class INTERFACE_INTERNAL LumPackageException : public std::runtime_error {
  public:
   explicit LumPackageException(const std::string& message)
       : std::runtime_error(message) {}
 };
 
-#define DEFINE_LUM_PACKAGE_EXCEPTION(name)            \
-  class DLL_LOCAL name : public LumPackageException { \
-   public:                                            \
-    explicit name(const std::string& message)         \
-        : LumPackageException(message) {}             \
+#define DEFINE_LUM_PACKAGE_EXCEPTION(name)                     \
+  class INTERFACE_INTERNAL name : public LumPackageException { \
+   public:                                                     \
+    explicit name(const std::string& message)                  \
+        : LumPackageException(message) {}                      \
   };
 
 DEFINE_LUM_PACKAGE_EXCEPTION(InvalidMetaStructure)

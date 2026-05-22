@@ -11,7 +11,7 @@
 
 namespace interfaceengine::lumen::object {
 
-DLL_LOCAL SDL_IOStream* OpenIOFromIStream(std::istream& cppStream);
+INTERFACE_INTERNAL SDL_IOStream* OpenIOFromIStream(std::istream& cppStream);
 
 }  // namespace interfaceengine::lumen::object
 

@@ -58,7 +58,7 @@ else()
     target_compile_options(interfaceengine_interface INTERFACE -Wall -Wpedantic -Wshadow -Wnon-virtual-dtor)
 endif()
 
-target_compile_definitions(interfaceengine_interface INTERFACE BUILDING_DLL) # TODO(necromax) rename
+target_compile_definitions(interfaceengine_interface INTERFACE INTERFACE_LOCAL)
 
 target_include_directories(interfaceengine_interface 
     INTERFACE

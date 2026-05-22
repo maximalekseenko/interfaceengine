@@ -12,7 +12,7 @@
 
 namespace interfaceengine::lumen::object {
 
-class DLL_LOCAL LumenImage : public Lumen {
+class INTERFACE_INTERNAL LumenImage : public Lumen {
  public:
   ~LumenImage();
 

@@ -13,7 +13,7 @@
 
 namespace interfaceengine::window {
 
-class DLL_LOCAL WindowManager {
+class INTERFACE_INTERNAL WindowManager {
  public:  // -------------------- CONSTRUCTOR --------------------
   WindowManager() = default;
 
