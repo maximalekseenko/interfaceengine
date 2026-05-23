@@ -4,6 +4,7 @@
 
 #include <necroutils/colexc.h>
 
+#include <cstdint>
 #include <fstream>
 #include <memory>
 #include <sstream>
@@ -57,7 +58,7 @@ void LumPackage::LoadPackage(const std::string& package_path,
   ReadCasted(lum_file, header.meta_lines_count);
 
   // Gather file locations.
-  for (int i = 0; i < header.files_count; ++i) {
+  for (PackageHeader::ElemCount i = 0; i < header.files_count; ++i) {
     lumen::package::PackageHeader::FileNameSize file_name_size;
     std::string file_name;
     lumen::package::PackageHeader::FileSize file_size;
@@ -77,7 +78,7 @@ void LumPackage::LoadPackage(const std::string& package_path,
   }
 
   // Gather meta lines.
-  for (int i = 0; i < header.meta_lines_count; ++i) {
+  for (PackageHeader::ElemCount i = 0; i < header.meta_lines_count; ++i) {
     lumen::package::PackageHeader::FileNameSize meta_line_size;
     std::string meta_line;
 

@@ -52,6 +52,8 @@ add_library(interfaceengine_interface INTERFACE)
 
 target_compile_features(interfaceengine_interface  INTERFACE cxx_std_20)
 
+set_target_properties(interfaceengine_interface PROPERTIES CXX_STANDARD_REQUIRED ON)
+
 if(MSVC)
     target_compile_options(interfaceengine_interface INTERFACE /W4 /permissive-)
 else()
@@ -110,7 +112,6 @@ target_sources(interfaceengine
         src/interface/gui/gui_component.cpp
         src/interface/core/interface.cpp
 )
-
 
 # -------------------- CPPLINT --------------------
 if(INTERFACEENGINE_RUN_CPPLINT)

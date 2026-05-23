@@ -9,9 +9,8 @@
 
 namespace interfaceengine::lumen::object {
 
-SDL_Surface* ExtractSurface(SDL_Surface* surf, uint32_t extract_x,
-                            uint32_t extract_y, uint32_t extract_w,
-                            uint32_t extract_h) {
+SDL_Surface* ExtractSurface(SDL_Surface* surf, int extract_x, int extract_y,
+                            int extract_w, int extract_h) {
   // Check rect being within surface.
   if (extract_x < 0 || extract_y < 0 || extract_x + extract_w > surf->w
       || extract_y + extract_h > surf->h) {
