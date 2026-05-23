@@ -29,6 +29,7 @@
 class INTERFACE_API GuiComponent {
  public:  // -------------------- CONSTRUCTOR --------------------
   GuiComponent() = default;
+  virtual ~GuiComponent() = default;
 
  public:  // -------------------- TYPES --------------------
   /// @brief Pointer type for storing components.
@@ -126,7 +127,7 @@ class INTERFACE_API GuiComponent {
   void DispatchMouseClick(MouseClickEvent event);
 
   /// @brief Unique identifier for this component.
-  Id id;
+  Id id_;
 
   /// @brief Size of the component in percent of a parent.
   PosPercent w_percent{1}, h_percent{1};

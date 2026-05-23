@@ -9,9 +9,9 @@
 
 std::vector<LumenRules> GuiComponent::GetLumenRules() { return {}; }
 
-void GuiComponent::SetId(Id id) { this->id = id; }
+void GuiComponent::SetId(Id id) { id_ = id; }
 
-GuiComponent::Id GuiComponent::GetId() { return id; }
+GuiComponent::Id GuiComponent::GetId() { return id_; }
 
 void GuiComponent::AddChildComponent(Ptr child_ptr) {
   child_ptr->parent = this;
