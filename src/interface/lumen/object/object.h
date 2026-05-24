@@ -29,7 +29,8 @@ class INTERFACE_INTERNAL
  public:
   virtual ~Object() = default;
   virtual void Load(const std::string& meta, const getFileFn& get_file_fn,
-                    const getObjectFn& get_object_fn, SDL_Renderer* renderer) {}
+                    const getObjectFn& get_object_fn, SDL_Renderer* renderer)
+      = 0;
 
   std::string type() { return type_; }
   std::string name() { return name_; }
