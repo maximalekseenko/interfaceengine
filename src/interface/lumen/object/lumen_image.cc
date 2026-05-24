@@ -21,7 +21,7 @@ LumenImage::~LumenImage() {
   if (texture_ != nullptr) SDL_DestroyTexture(texture_);
 }
 
-void LumenImage::Load(const std::string& meta, const getFileFn& get_file_fn,
+void LumenImage::Load(const std::string& meta, const getFileFn&,
                       const getObjectFn& get_object_fn,
                       SDL_Renderer* renderer) {
   std::stringstream meta_stream(meta);

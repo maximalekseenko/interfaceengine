@@ -19,8 +19,7 @@ AssetImage::~AssetImage() {
   if (surface_ != nullptr) SDL_DestroySurface(surface_);
 }
 void AssetImage::Load(const std::string& meta, const getFileFn& get_file_fn,
-                      const getObjectFn& get_object_fn,
-                      SDL_Renderer* renderer) {
+                      const getObjectFn&, SDL_Renderer*) {
   std::stringstream meta_stream(meta);
   std::string meta_word;
   std::string file_name;

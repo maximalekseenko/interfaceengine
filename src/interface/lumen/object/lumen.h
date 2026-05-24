@@ -17,7 +17,7 @@ class INTERFACE_INTERNAL Lumen : public Object {
   virtual ~Lumen() = default;
 
  public:
-  virtual SDL_Texture* GetTexture(std::string data) const = 0;
+  virtual SDL_Texture* GetTexture(const std::string& data) const = 0;
 };
 
 }  // namespace interfaceengine::lumen::object

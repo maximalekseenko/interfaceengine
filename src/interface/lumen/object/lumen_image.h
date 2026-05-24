@@ -20,7 +20,10 @@ class INTERFACE_INTERNAL LumenImage : public Lumen {
   void Load(const std::string& meta, const getFileFn& get_file_fn,
             const getObjectFn& get_object_fn, SDL_Renderer* renderer) override;
 
-  SDL_Texture* GetTexture(std::string data) const override { return texture_; }
+  SDL_Texture* GetTexture(const std::string& data) const override {
+    (void)data;
+    return texture_;
+  }
 
  private:
   SDL_Texture* texture_;
