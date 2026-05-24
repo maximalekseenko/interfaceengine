@@ -145,7 +145,8 @@ void LumPackage::AddMeta(const std::string& meta_line,
   AddObject(std::move(new_asset));
 }
 
-SDL_Texture* LumPackage::GetLumenTexture(std::string lumen_name) {
+SDL_Texture* LumPackage::GetLumenTexture(const std::string& lumen_name,
+                                         const std::string& data) {
   auto it = loaded_objects_.find(lumen_name);
   if (it == loaded_objects_.end())
     throw ObjectNotFound("LumPackage failed to find lumen \"" + lumen_name
@@ -156,7 +157,7 @@ SDL_Texture* LumPackage::GetLumenTexture(std::string lumen_name) {
   if (lumen == nullptr)
     throw ObjectNotFound("LumPackage found object \"" + lumen_name
                          + "\", but it wasn't a lumen.");
-  return lumen->GetTexture("");
+  return lumen->GetTexture(data);
 }
 
 const object::Object* LumPackage::GetObject(const std::string& object_name) {

@@ -39,7 +39,7 @@ SDL_Texture* LumenManager::GetLumenTexture(const std::string& package_name,
   if (it == loader_packages_.end())
     throw PackageNotFoundError("LumenManager::GetLumenTexture", package_name);
 
-  return it->second->GetLumenTexture(lumen_name);
+  return it->second->GetLumenTexture(lumen_name, lumen_data);
 }
 
 void LumenManager::RemovePackage(const std::string& package_name) {

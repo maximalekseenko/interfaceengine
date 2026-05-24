@@ -18,7 +18,8 @@ class INTERFACE_INTERNAL LumPackage {
  public:
   void LoadPackage(const std::string& package_path, SDL_Renderer* renderer);
 
-  SDL_Texture* GetLumenTexture(std::string lumen_name);
+  SDL_Texture* GetLumenTexture(const std::string& lumen_name,
+                               const std::string& data);
 
   std::string name() { return name_; }
 
