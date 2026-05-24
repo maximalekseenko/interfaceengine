@@ -16,28 +16,11 @@ struct INTERFACE_API LumenRules {
   /// @brief Name of a lumen this rule refers to.
   std::string lumen_name{""};
 
-  /// @brief Position of the lumen.
-  /// Measured in percent of size of the parent gui component.
-  PosPercent x_percent{0}, y_percent{0};
+  PosPercent x_percent{0}, y_percent{0}, w_percent{1}, h_percent{1};
 
-  /// @brief Position of the lumen.
-  /// Measured in pixels relative to the parent gui component.
-  PosPixel x_offset{0}, y_offset{0};
+  PosPixel x_offset{0}, y_offset{0}, w_offset{0}, h_offset{0};
 
-  /// @brief Scale of the lumen.
-  /// Measured in percent of size of the parent gui component.
-  PosPercent w_percent{1}, h_percent{1};
-
-  /// @brief Scale of the lumen.
-  /// Measured in pixels relative to the parent gui component.
-  PosPixel w_offset{0}, h_offset{0};
-
-  /// @brief Horizontal alignment of the lumen.
-  /// Anchored to the rect of the parent gui component.
   HorizontalAlignment horizontal_alignment{HorizontalAlignment::Left};
-
-  /// @brief Vertical alignment of the lumen.
-  /// Anchored to the rect of the parent gui component.
   VerticalAlignment vertical_alignment{VerticalAlignment::Top};
 
   HorizontalAlignment horizontal_anchor{HorizontalAlignment::Left};

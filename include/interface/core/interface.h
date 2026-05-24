@@ -59,11 +59,7 @@ class INTERFACE_API Interface {
   void AddLogSink(Logger::SinkPtr sink);
 
  private:  // -------------------- PIMPL --------------------
-  /// @brief Structure for private implementation of interface.
   struct Impl;
-
-  /// @brief The pointer to private implementation of this interface.
-  // std::unique_ptr<Impl> impl;
   Impl* impl_;
 };
 
