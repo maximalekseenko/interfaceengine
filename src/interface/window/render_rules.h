@@ -39,9 +39,6 @@ struct INTERFACE_INTERNAL RenderRules {
 
   HorizontalAlignment horizontal_anchor{HorizontalAlignment::Left};
   VerticalAlignment vertical_anchor{VerticalAlignment::Top};
-
-  /// @brief TODO remove
-  PosPixel crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
 };
 
 }  // namespace interfaceengine::window
