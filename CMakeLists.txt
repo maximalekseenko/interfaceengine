@@ -42,7 +42,7 @@ FetchContent_MakeAvailable(SDL3_ttf)
 FetchContent_Declare(
     necroutils
     GIT_REPOSITORY https://github.com/maximalekseenko/necroutils
-    GIT_TAG        78208b2aebb8dbff1bfc8f1b1173882e883ccd04
+    GIT_TAG        4920d61e7182176584dd447be388658683b47af1
     FIND_PACKAGE_ARGS)
 FetchContent_MakeAvailable(necroutils)
 
@@ -54,13 +54,9 @@ target_compile_features(interfaceengine_interface  INTERFACE cxx_std_20)
 
 set_target_properties(interfaceengine_interface PROPERTIES CXX_STANDARD_REQUIRED ON)
 
-if(MSVC)
-    target_compile_options(interfaceengine_interface INTERFACE /W4 /permissive-)
-else()
-    target_compile_options(interfaceengine_interface INTERFACE -Wall -Wpedantic -Wshadow -Wnon-virtual-dtor)
-endif()
-
 target_compile_definitions(interfaceengine_interface INTERFACE INTERFACE_LOCAL)
+
+target_link_options(interfaceengine_interface INTERFACE -static -static-libgcc -static-libstdc++)
 
 target_include_directories(interfaceengine_interface 
     INTERFACE
