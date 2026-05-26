@@ -57,7 +57,7 @@ set_target_properties(interfaceengine_interface PROPERTIES CXX_STANDARD_REQUIRED
 target_compile_definitions(interfaceengine_interface INTERFACE INTERFACE_LOCAL)
 
 if(MINGW)
-    target_link_options(interfaceengine_interface PRIVATE -static -static-libgcc -static-libstdc++)
+    target_link_options(interfaceengine_interface INTERFACE -static -static-libgcc -static-libstdc++)
 endif()
 
 target_include_directories(interfaceengine_interface 
