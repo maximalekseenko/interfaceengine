@@ -9,6 +9,6 @@ target_link_libraries(interfaceengine_gui
 
 target_sources(interfaceengine_gui
     PRIVATE
-        gui_component.cpp
+        component.cc
         manager.cc
 )

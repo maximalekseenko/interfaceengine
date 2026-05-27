@@ -15,19 +15,6 @@
 
 namespace interfaceengine::gui {
 
-/// @brief A component that represents an element on the screen.
-///
-/// To set position of a component use
-/// `SetWidth` `SetHorizontalPosition`
-/// `SetHeight` `SetVerticalPosition` functions.
-///
-/// To set the looks for a component do one of the following:
-///
-/// - Fill `lumen_rules` with rules if this component does not
-/// change the visuals.
-///
-/// - Set the `get_lumen_rules` to a custom function.
-/// It will be called
 class INTERFACE_API Component {
  public:  // -------------------- CONSTRUCTOR --------------------
   Component() = default;
@@ -43,34 +30,16 @@ class INTERFACE_API Component {
   /// @brief Type of message that is being sent.
   using Message = std::string;
 
-  using OnMessage = std::function<void(Message)>;
-  using OnMouseOver = std::function<void(MouseEvent)>;
-  using OnMouseClick = std::function<void(MouseEvent)>;
-
  public:  // -------------------- VIRTUAL MEMBERS --------------------
-  /// @brief A list of lumen rules that is used with
-  /// default `get_lumen_rules` function;
-  std::vector<LumenRules> lumen_rules;
-
-  /// @brief A function for retrieving lumen rules during render cycle.
-  /// @note By default, returns `lumen_rules`.
-  virtual std::vector<LumenRules> GetLumenRules();
-
-  // / @brief Called when message is being received.
-  /// @param message A message that is being received.
-  OnMessage on_message;
-  OnMouseOver on_mouse_over;
-  OnMouseClick on_mouse_click;
+  virtual std::vector<LumenRules> GetLumenRules() { return {}; }
+  void virtual OnMessage(const Message&) {}
+  void virtual OnMouseOver(const MouseEvent&) {}
+  void virtual OnMouseClick(const MouseEvent&) {}
 
  public:  // -------------------- PUBLIC METHODS --------------------
-  /// @brief Sets id of this component.
-  /// @note Id can repeat throughout the gui tree.
-  /// @param id Identifier to set this id to.
-  void SetId(Id id);
+  void SetId(Id id) { id_ = id; }
 
-  /// @brief Retrieves id of the component.
-  /// @return Identifier of this component.
-  Id GetId();
+  Id id() { return id_; }
 
   /// @brief Adds child component to this component.
   /// @param child_ptr A unique pointer to the child component.
@@ -118,37 +87,26 @@ class INTERFACE_API Component {
   friend class Interface;
   friend class Manager;
 
-  /// @brief Sends a message down the ui tree.
-  /// @param message Message to send.
-  /// @param receiver_id Id of the receiver of the message.
-  /// @param single_receiver Should stop after finding first receiver?
-  /// (i.e. set to true if you want for only first component with
-  /// `receiver_id` to get the message)
-  void DispatchMessage(Message message, Id receiver_id,
-                       bool single_receiver = false);
-  void DispatchMouseOver(MouseEvent event);
-  void DispatchMouseClick(MouseEvent event);
-
   /// @brief Unique identifier for this component.
   Id id_;
 
   /// @brief Size of the component in percent of a parent.
-  PosPercent w_percent{1}, h_percent{1};
+  PosPercent w_percent_{1}, h_percent_{1};
 
   /// @brief An additional size of the component in pixels.
-  PosPixel w_offset{0}, h_offset{0};
+  PosPixel w_offset_{0}, h_offset_{0};
 
   /// @brief Position of the component in percent from alignment point.
-  PosPercent x_percent{0}, y_percent{0};
+  PosPercent x_percent_{0}, y_percent_{0};
 
   /// @brief An additional postion offset of the component in pixels.
-  PosPixel x_offset = {0}, y_offset{0};
+  PosPixel x_offset_{0}, y_offset_{0};
 
   /// @brief Horizontal alignment of the component to its perent.
-  HorizontalAlignment horizontal_alignment{HorizontalAlignment::Left};
+  HorizontalAlignment horizontal_alignment_{HorizontalAlignment::Left};
 
   /// @brief vertical alignment of the component to its perent.
-  VerticalAlignment vertical_alignment{VerticalAlignment::Top};
+  VerticalAlignment vertical_alignment_{VerticalAlignment::Top};
 
   /// @brief Parent component to this one.
   /// @note Is not set for root components.
