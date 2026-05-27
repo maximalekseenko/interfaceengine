@@ -4,11 +4,11 @@
 
 #include <utility>
 
-#include "interface/gui/gui_component.h"
+#include "interface/gui/component.h"
 
 namespace interfaceengine::gui {
 
-void Manager::SetNewRootComponent(GuiComponent::Ptr new_root_component) {
+void Manager::SetNewRootComponent(Component::Ptr new_root_component) {
   root_component_ = std::move(new_root_component);
 }
 

@@ -1,52 +1,52 @@
 // Copyright 2026 maxim (necromax) alekseenko
 
-#include "interface/gui/gui_component.h"
-
 #include <utility>
 #include <vector>
 
+#include "interface/gui/component.h"
 #include "interface/misc/rect.h"
 
-std::vector<LumenRules> GuiComponent::GetLumenRules() { return {}; }
+namespace interfaceengine::gui {
 
-void GuiComponent::SetId(Id id) { id_ = id; }
+std::vector<LumenRules> Component::GetLumenRules() { return {}; }
 
-GuiComponent::Id GuiComponent::GetId() { return id_; }
+void Component::SetId(Id id) { id_ = id; }
 
-void GuiComponent::AddChildComponent(Ptr child_ptr) {
+Component::Id Component::GetId() { return id_; }
+
+void Component::AddChildComponent(Ptr child_ptr) {
   child_ptr->parent = this;
   this->children.push_back(std::move(child_ptr));
 }
 
-void GuiComponent::SetWidth(PosPercent const& percent, PosPixel const& offset) {
+void Component::SetWidth(PosPercent const& percent, PosPixel const& offset) {
   this->w_percent = percent;
   this->w_offset = offset;
 }
 
-void GuiComponent::SetHorizontalPosition(PosPercent const& percent,
-                                         PosPixel const& offset,
-                                         HorizontalAlignment const& alignment) {
+void Component::SetHorizontalPosition(PosPercent const& percent,
+                                      PosPixel const& offset,
+                                      HorizontalAlignment const& alignment) {
   this->x_percent = percent;
   this->x_offset = offset;
   this->horizontal_alignment = alignment;
 }
 
-void GuiComponent::SetHeight(PosPercent const& percent,
-                             PosPixel const& offset) {
+void Component::SetHeight(PosPercent const& percent, PosPixel const& offset) {
   this->h_percent = percent;
   this->h_offset = offset;
 }
 
-void GuiComponent::SetVerticalPosition(PosPercent const& percent,
-                                       PosPixel const& offset,
-                                       VerticalAlignment const& alignment) {
+void Component::SetVerticalPosition(PosPercent const& percent,
+                                    PosPixel const& offset,
+                                    VerticalAlignment const& alignment) {
   this->y_percent = percent;
   this->y_offset = offset;
   this->vertical_alignment = alignment;
 }
 
-void GuiComponent::GetSelfRect(PosPixel* out_x, PosPixel* out_y,
-                               PosPixel* out_w, PosPixel* out_h) const {
+void Component::GetSelfRect(PosPixel* out_x, PosPixel* out_y, PosPixel* out_w,
+                            PosPixel* out_h) const {
   PosPixel parent_x, parent_y, parent_w, parent_h;
   if (this->parent != nullptr) {
     this->parent->GetSelfRect(&parent_x, &parent_y, &parent_w, &parent_h);
@@ -62,8 +62,8 @@ void GuiComponent::GetSelfRect(PosPixel* out_x, PosPixel* out_y,
           h_percent, h_offset, horizontal_alignment, vertical_alignment);
 }
 
-void GuiComponent::DispatchMessage(Message message, Id receiver_id,
-                                   bool single_receiver) {
+void Component::DispatchMessage(Message message, Id receiver_id,
+                                bool single_receiver) {
   if (GetId() == receiver_id) {
     on_message(message);
     if (single_receiver) return;
@@ -73,7 +73,7 @@ void GuiComponent::DispatchMessage(Message message, Id receiver_id,
     child->DispatchMessage(message, receiver_id, single_receiver);
 }
 
-void GuiComponent::DispatchMouseOver(MouseEvent event) {
+void Component::DispatchMouseOver(MouseEvent event) {
   PosPixel self_x, self_y, self_w, self_h;
   GetSelfRect(&self_x, &self_y, &self_w, &self_h);
   if (!IsWithinRect(event.x, event.y, self_x, self_y, self_w, self_h)) return;
@@ -82,7 +82,7 @@ void GuiComponent::DispatchMouseOver(MouseEvent event) {
   for (auto& child : children) child->DispatchMouseOver(event);
 }
 
-void GuiComponent::DispatchMouseClick(MouseEvent event) {
+void Component::DispatchMouseClick(MouseEvent event) {
   PosPixel self_x, self_y, self_w, self_h;
   GetSelfRect(&self_x, &self_y, &self_w, &self_h);
   if (!IsWithinRect(event.x, event.y, self_x, self_y, self_w, self_h)) return;
@@ -90,3 +90,5 @@ void GuiComponent::DispatchMouseClick(MouseEvent event) {
   if (on_mouse_click) on_mouse_click(event);
   for (auto& child : children) child->DispatchMouseClick(event);
 }
+
+}  // namespace interfaceengine::gui

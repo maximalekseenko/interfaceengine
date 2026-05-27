@@ -1,7 +1,7 @@
 // Copyright 2026 maxim (necromax) alekseenko
 
-#ifndef INCLUDE_INTERFACE_GUI_GUI_COMPONENT_H_
-#define INCLUDE_INTERFACE_GUI_GUI_COMPONENT_H_
+#ifndef INCLUDE_INTERFACE_GUI_COMPONENT_H_
+#define INCLUDE_INTERFACE_GUI_COMPONENT_H_
 
 #include <functional>
 #include <memory>
@@ -12,6 +12,8 @@
 #include "interface/event.h"
 #include "interface/gui/lumen_rules.h"
 #include "interface/position_types.h"
+
+namespace interfaceengine::gui {
 
 /// @brief A component that represents an element on the screen.
 ///
@@ -26,14 +28,14 @@
 ///
 /// - Set the `get_lumen_rules` to a custom function.
 /// It will be called
-class INTERFACE_API GuiComponent {
+class INTERFACE_API Component {
  public:  // -------------------- CONSTRUCTOR --------------------
-  GuiComponent() = default;
-  virtual ~GuiComponent() = default;
+  Component() = default;
+  virtual ~Component() = default;
 
  public:  // -------------------- TYPE DEFINITIONS --------------------
   /// @brief Pointer type for storing components.
-  using Ptr = std::unique_ptr<GuiComponent>;
+  using Ptr = std::unique_ptr<Component>;
 
   /// @brief Type of unique identifier for a component.
   using Id = std::string;
@@ -114,6 +116,7 @@ class INTERFACE_API GuiComponent {
 
  private:  // -------------------- PRIVATE MEMBERS --------------------
   friend class Interface;
+  friend class Manager;
 
   /// @brief Sends a message down the ui tree.
   /// @param message Message to send.
@@ -149,10 +152,12 @@ class INTERFACE_API GuiComponent {
 
   /// @brief Parent component to this one.
   /// @note Is not set for root components.
-  GuiComponent* parent{nullptr};
+  Component* parent{nullptr};
 
   /// @brief List of pointers to child components.
   std::vector<Ptr> children;
 };
 
-#endif  // INCLUDE_INTERFACE_GUI_GUI_COMPONENT_H_
+}  // namespace interfaceengine::gui
+
+#endif  // INCLUDE_INTERFACE_GUI_COMPONENT_H_

@@ -4,7 +4,7 @@
 #define SRC_INTERFACE_GUI_MANAGER_H_
 
 #include "interface/dll.h"
-#include "interface/gui/gui_component.h"  // TODO(necromax): rename to just component
+#include "interface/gui/component.h"  // TODO(necromax): rename to just component
 
 namespace interfaceengine::gui {
 
@@ -18,13 +18,13 @@ class INTERFACE_INTERNAL Manager {
   ~Manager() = default;
 
  public:  // -------------------- PUBLIC METHODS --------------------
-  GuiComponent* root_component() { return root_component_.get(); }
+  Component* root_component() { return root_component_.get(); }
 
-  void SetNewRootComponent(GuiComponent::Ptr new_root_component);
+  void SetNewRootComponent(Component::Ptr new_root_component);
   void UpdateForWindowSize(int window_w, int window_h);
 
  private:  // -------------------- PRIVATE MEMBERS --------------------
-  GuiComponent::Ptr root_component_{nullptr};
+  Component::Ptr root_component_{nullptr};
 };
 
 }  // namespace interfaceengine::gui

@@ -8,7 +8,7 @@
 #include <string>
 
 #include "interface/dll.h"
-#include "interface/gui/gui_component.h"
+#include "interface/gui/component.h"
 
 /// @brief Core object of the engine.
 ///
@@ -35,7 +35,7 @@ class INTERFACE_API Interface {
   ///
   /// Root gui component is stretched to the scale of a screen.
   /// @param gui_component Pointer to new core gui component.
-  void SetRootGuiComponent(GuiComponent::Ptr gui_component);
+  void SetRootGuiComponent(interfaceengine::gui::Component::Ptr gui_component);
 
   /// @brief Sends a message down the ui tree.
   /// @param message Message to send.
@@ -43,8 +43,8 @@ class INTERFACE_API Interface {
   /// @param single_receiver Should stop after finding first receiver?
   /// (i.e. set to true if you want for only first component with
   /// `receiver_id` to get the message)
-  void SendMessageToGui(GuiComponent::Message message,
-                        GuiComponent::Id receiver_id,
+  void SendMessageToGui(interfaceengine::gui::Component::Message message,
+                        interfaceengine::gui::Component::Id receiver_id,
                         bool single_receiver = false);
 
   /// @brief Loads data from a lumen package.

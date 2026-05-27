@@ -4,7 +4,7 @@
 #define INCLUDE_INTERFACE_INTERFACE_H_
 
 #include "interface/core/interface.h"
-#include "interface/gui/gui_component.h"
+#include "interface/gui/component.h"
 #include "interface/gui/lumen_rules.h"
 #include "interface/position_types.h"
 

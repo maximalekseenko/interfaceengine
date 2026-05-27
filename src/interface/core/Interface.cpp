@@ -36,17 +36,17 @@ void Interface::Run() {
   }
 }
 
-void Interface::SetRootGuiComponent(GuiComponent::Ptr gui_component) {
+void Interface::SetRootGuiComponent(
+    interfaceengine::gui::Component::Ptr gui_component) {
   impl_->gui_manager_.SetNewRootComponent(std::move(gui_component));
 
   impl_->UpdateRootComponentSize();
 }
 
-void Interface::SendMessageToGui(GuiComponent::Message message,
-                                 GuiComponent::Id receiver_id,
-                                 bool single_receiver) {
-  impl_->gui_manager_.root_component()->DispatchMessage(message, receiver_id,
-                                                        single_receiver);
+void Interface::SendMessageToGui(
+    interfaceengine::gui::Component::Message message,
+    interfaceengine::gui::Component::Id receiver_id, bool single_receiver) {
+  // impl_->gui_manager_.DispatchMessage(message, receiver_id, single_receiver);
 }
 
 void Interface::Quit() { impl_->is_running = false; }

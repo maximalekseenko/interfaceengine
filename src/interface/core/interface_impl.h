@@ -40,7 +40,7 @@ struct Interface::Impl {
   /// @brief Core GUI component.
   interfaceengine::gui::Manager gui_manager_;
 
-  // GuiComponent::Ptr root_gui_component{std::make_unique<GuiComponent>()};
+  // Component::Ptr root_gui_component{std::make_unique<Component>()};
 
   /// @brief Defines if application is running.
   bool is_running{false};
@@ -66,7 +66,8 @@ struct Interface::Impl {
   /// @param lumen_rules Lumen rule to convert.
   /// @return Render rules for rendering a lumen.
   interfaceengine::window::RenderRules MakeRenderRules(
-      const GuiComponent* gui_component, const LumenRules& lumen_rules);
+      const interfaceengine::gui::Component* gui_component,
+      const LumenRules& lumen_rules);
 
   void UpdateRootComponentSize();
 };

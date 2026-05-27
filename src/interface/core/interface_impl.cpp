@@ -24,7 +24,7 @@ void Interface::Impl::Render() {
     this->window_manager.ClearRender();
 
     // Initialize a stack with gui components yet to render.
-    std::stack<GuiComponent*> stack_to_render;
+    std::stack<interfaceengine::gui::Component*> stack_to_render;
     stack_to_render.push(gui_manager_.root_component());
 
     // Iterate through rendering stack.
@@ -34,7 +34,8 @@ void Interface::Impl::Render() {
     while (!stack_to_render.empty()) {
       try {
         // Extract next gui component to render.
-        GuiComponent* gui_component_to_render = stack_to_render.top();
+        interfaceengine::gui::Component* gui_component_to_render
+            = stack_to_render.top();
         stack_to_render.pop();
 
         // Iterate and render lumen rules of that gui component.
@@ -49,9 +50,9 @@ void Interface::Impl::Render() {
         }
 
         // Add children to stack.
-        for (auto& component_child : gui_component_to_render->children) {
-          stack_to_render.push(component_child.get());
-        }
+        // for (auto& component_child : gui_component_to_render->children) {
+        //   stack_to_render.push(component_child.get());
+        // }
       } catch (...) {
         col_exc.Add(std::current_exception());
       }
@@ -91,12 +92,12 @@ void Interface::Impl::HandleEvents() {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_EVENT_QUIT) this->self->Quit();
-    if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
-      gui_manager_.root_component()->DispatchMouseClick(
-          {.is_down = true,
-           .button = event.button.button,
-           .x = event.button.x,
-           .y = event.button.y});
+    // if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+    // gui_manager_.root_component()->DispatchMouseClick(
+    //     {.is_down = true,
+    //      .button = event.button.button,
+    //      .x = event.button.x,
+    //      .y = event.button.y});
     if (event.type == SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED)
       UpdateRootComponentSize();
   }
@@ -118,7 +119,8 @@ void Interface::LoadLumens(std::string package_path) {
 }
 
 interfaceengine::window::RenderRules Interface::Impl::MakeRenderRules(
-    const GuiComponent* gui_component, const LumenRules& lumen_rules) {
+    const interfaceengine::gui::Component* gui_component,
+    const LumenRules& lumen_rules) {
   interfaceengine::window::RenderRules new_render_rules;
   PosPixel component_x, component_y, component_w, component_h;
   gui_component->GetSelfRect(&component_x, &component_y, &component_w,
