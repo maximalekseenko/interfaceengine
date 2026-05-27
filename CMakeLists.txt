@@ -109,6 +109,7 @@ target_sources(interfaceengine
         src/interface/misc/rect.cpp
         src/interface/gui/gui_component.cpp
         src/interface/core/interface.cpp
+        src/interface/core/interface_impl.cpp
 )
 
 # -------------------- CPPLINT --------------------
