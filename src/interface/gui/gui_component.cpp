@@ -73,7 +73,7 @@ void GuiComponent::DispatchMessage(Message message, Id receiver_id,
     child->DispatchMessage(message, receiver_id, single_receiver);
 }
 
-void GuiComponent::DispatchMouseOver(MouseOverEvent event) {
+void GuiComponent::DispatchMouseOver(MouseEvent event) {
   PosPixel self_x, self_y, self_w, self_h;
   GetSelfRect(&self_x, &self_y, &self_w, &self_h);
   if (!IsWithinRect(event.x, event.y, self_x, self_y, self_w, self_h)) return;
@@ -82,7 +82,7 @@ void GuiComponent::DispatchMouseOver(MouseOverEvent event) {
   for (auto& child : children) child->DispatchMouseOver(event);
 }
 
-void GuiComponent::DispatchMouseClick(MouseClickEvent event) {
+void GuiComponent::DispatchMouseClick(MouseEvent event) {
   PosPixel self_x, self_y, self_w, self_h;
   GetSelfRect(&self_x, &self_y, &self_w, &self_h);
   if (!IsWithinRect(event.x, event.y, self_x, self_y, self_w, self_h)) return;

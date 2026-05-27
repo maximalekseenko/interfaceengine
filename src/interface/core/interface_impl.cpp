@@ -25,7 +25,7 @@ void Interface::Impl::Render() {
 
     // Initialize a stack with gui components yet to render.
     std::stack<GuiComponent*> stack_to_render;
-    stack_to_render.push(root_gui_component.get());
+    stack_to_render.push(gui_manager_.root_component());
 
     // Iterate through rendering stack.
     CollectiveException col_exc(
@@ -92,10 +92,11 @@ void Interface::Impl::HandleEvents() {
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_EVENT_QUIT) this->self->Quit();
     if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
-      root_gui_component->DispatchMouseClick({.is_down = true,
-                                              .button = event.button.button,
-                                              .x = event.button.x,
-                                              .y = event.button.y});
+      gui_manager_.root_component()->DispatchMouseClick(
+          {.is_down = true,
+           .button = event.button.button,
+           .x = event.button.x,
+           .y = event.button.y});
     if (event.type == SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED)
       UpdateRootComponentSize();
   }
@@ -151,6 +152,5 @@ interfaceengine::window::RenderRules Interface::Impl::MakeRenderRules(
 void Interface::Impl::UpdateRootComponentSize() {
   int window_w, window_h;
   window_manager.GetWindowSize(&window_w, &window_h);
-  root_gui_component->SetWidth(0, window_w);
-  root_gui_component->SetHeight(0, window_h);
+  gui_manager_.UpdateForWindowSize(window_w, window_h);
 }

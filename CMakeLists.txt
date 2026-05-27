@@ -71,6 +71,8 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/interface/lumen")
 
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/interface/window")
 
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/interface/gui")
+
 if(INTERFACEENGINE_COMPILE_DEFAULT_LUMC)
     add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tools/lumcompiler")
     add_dependencies(interfaceengine_interface interfaceengine_lumcompiler)
@@ -100,6 +102,7 @@ target_link_libraries(interfaceengine
         SDL3_ttf::SDL3_ttf
         interfaceengine::lumen::manager
         interfaceengine::window
+        interfaceengine_gui
     PUBLIC
         necroutils::necroutils
 )
@@ -107,7 +110,6 @@ target_link_libraries(interfaceengine
 target_sources(interfaceengine
     PRIVATE
         src/interface/misc/rect.cpp
-        src/interface/gui/gui_component.cpp
         src/interface/core/interface.cpp
         src/interface/core/interface_impl.cpp
 )

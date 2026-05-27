@@ -31,7 +31,7 @@ class INTERFACE_API GuiComponent {
   GuiComponent() = default;
   virtual ~GuiComponent() = default;
 
- public:  // -------------------- TYPES --------------------
+ public:  // -------------------- TYPE DEFINITIONS --------------------
   /// @brief Pointer type for storing components.
   using Ptr = std::unique_ptr<GuiComponent>;
 
@@ -42,8 +42,8 @@ class INTERFACE_API GuiComponent {
   using Message = std::string;
 
   using OnMessage = std::function<void(Message)>;
-  using OnMouseOver = std::function<void(MouseOverEvent)>;
-  using OnMouseClick = std::function<void(MouseClickEvent)>;
+  using OnMouseOver = std::function<void(MouseEvent)>;
+  using OnMouseClick = std::function<void(MouseEvent)>;
 
  public:  // -------------------- VIRTUAL MEMBERS --------------------
   /// @brief A list of lumen rules that is used with
@@ -123,8 +123,8 @@ class INTERFACE_API GuiComponent {
   /// `receiver_id` to get the message)
   void DispatchMessage(Message message, Id receiver_id,
                        bool single_receiver = false);
-  void DispatchMouseOver(MouseOverEvent event);
-  void DispatchMouseClick(MouseClickEvent event);
+  void DispatchMouseOver(MouseEvent event);
+  void DispatchMouseClick(MouseEvent event);
 
   /// @brief Unique identifier for this component.
   Id id_;

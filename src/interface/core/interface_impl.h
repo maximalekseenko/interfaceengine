@@ -12,6 +12,7 @@
 
 #include "interface/core/interface.h"
 #include "interface/core/settings.h"
+#include "interface/gui/manager.h"
 #include "interface/lumen/manager/manager.h"
 #include "interface/misc/rect.h"
 #include "interface/window/manager.h"
@@ -37,7 +38,9 @@ struct Interface::Impl {
   interfaceengine::window::WindowManager window_manager;
 
   /// @brief Core GUI component.
-  GuiComponent::Ptr root_gui_component{std::make_unique<GuiComponent>()};
+  interfaceengine::gui::Manager gui_manager_;
+
+  // GuiComponent::Ptr root_gui_component{std::make_unique<GuiComponent>()};
 
   /// @brief Defines if application is running.
   bool is_running{false};
