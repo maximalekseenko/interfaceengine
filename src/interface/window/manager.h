@@ -20,6 +20,8 @@ class INTERFACE_INTERNAL WindowManager {
  public:  // -------------------- PUBLIC METHODS --------------------
   SDL_Renderer* renderer() { return sdl_renderer_; }
 
+  void InitSDL();
+
   /// @brief Creates a window of set size.
   /// @param width The width of the window created.
   /// @param height The height of the window.

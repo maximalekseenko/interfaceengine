@@ -2,9 +2,19 @@
 
 #include "interface/window/manager.h"
 
+#include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
+
 #include "interface/window/exceptions.h"
 
 namespace interfaceengine::window {
+
+void WindowManager::InitSDL() {
+  if (!SDL_Init(SDL_INIT_VIDEO)) return;
+  // impl_->logger.Log("SDL had failed to initialize", LogLevel::Error);
+  if (!TTF_Init()) return;  // TODO(necromax): error!
+  // impl_->logger.Log("SDL_TTF had failed to initialize", LogLevel::Error);
+}
 
 void WindowManager::CreateWindow(int32_t width, int32_t height,
                                  uint64_t flags) {

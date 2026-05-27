@@ -2,8 +2,6 @@
 
 #include "interface/core/interface.h"
 
-#include <SDL3/SDL.h>
-#include <SDL3_ttf/SDL_ttf.h>
 #include <necroutils/colexc.h>
 #include <necroutils/logger.h>
 
@@ -22,12 +20,7 @@ Interface::Interface() : impl_{new Impl()} { impl_->self = this; }
 Interface::~Interface() { delete impl_; }
 
 void Interface::Initialize() {
-  // Initialize SDL.
-  if (!SDL_Init(SDL_INIT_VIDEO))
-    impl_->logger.Log("SDL had failed to initialize", LogLevel::Error);
-  if (!TTF_Init())
-    impl_->logger.Log("SDL_TTF had failed to initialize", LogLevel::Error);
-
+  impl_->window_manager.InitSDL();
   impl_->window_manager.CreateWindow();
   impl_->settings.executable_path = SDL_GetBasePath();
 
