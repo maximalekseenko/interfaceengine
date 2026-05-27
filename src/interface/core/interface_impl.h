@@ -1,0 +1,71 @@
+// Copyright 2026 maxim (necromax) alekseenko
+
+#ifndef SRC_INTERFACE_CORE_INTERFACE_IMPL_H_
+#define SRC_INTERFACE_CORE_INTERFACE_IMPL_H_
+
+#include <necroutils/logger.h>
+
+#include <memory>
+#include <stack>
+#include <string>
+#include <utility>
+
+#include "interface/core/interface.h"
+#include "interface/core/settings.h"
+#include "interface/lumen/manager/manager.h"
+#include "interface/misc/rect.h"
+#include "interface/window/manager.h"
+
+struct Interface::Impl {
+ public:  // -------------------- CONSTRUCTOR --------------------
+  Impl();
+
+ public:  // -------------------- MEMBERS --------------------
+  /// @brief Pointer to public part of pimpl implementation.
+  Interface* self;
+
+  /// @brief Settings for this engine instance.
+  InterfaceSettings settings;
+
+  /// @brief Logger for this interface.
+  Logger logger;
+
+  /// @brief Lumen manager for this interface.
+  interfaceengine::lumen::manager::LumenManager lumen_manager;
+
+  /// @brief Window manager for this interface.
+  interfaceengine::window::WindowManager window_manager;
+
+  /// @brief Core GUI component.
+  GuiComponent::Ptr root_gui_component{std::make_unique<GuiComponent>()};
+
+  /// @brief Defines if application is running.
+  bool is_running{false};
+
+  /// @brief Stores time of the last frame's tick in milliseconds.
+  uint64_t last_frame_tick{0u};
+
+  bool is_initialized{false};
+
+ public:  // -------------------- FUNCTIONS --------------------
+  /// @brief Renders content.
+  void Render();
+
+  /// @brief Handles incoming events.
+  void HandleEvents();
+
+  /// @brief Delays the tickrate down to fps setting.
+  void TickDelay();
+
+  /// @brief Converts lumen rules of a gui component
+  /// to render rules of window manager.
+  /// @param gui_component Component this lumen rule belongs to.
+  /// @param lumen_rules Lumen rule to convert.
+  /// @return Render rules for rendering a lumen.
+  interfaceengine::window::RenderRules MakeRenderRules(
+      const GuiComponent* gui_component, const LumenRules& lumen_rules);
+
+  void UpdateRootComponentSize();
+};
+
+#endif  // SRC_INTERFACE_CORE_INTERFACE_IMPL_H_
