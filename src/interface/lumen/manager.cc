@@ -1,6 +1,6 @@
 // Copyright 2026 maxim (necromax) alekseenko
 
-#include "interface/lumen/manager/manager.h"
+#include "interface/lumen/manager.h"
 
 #include <SDL3/SDL_render.h>
 
@@ -14,10 +14,10 @@
 #include <unordered_set>
 #include <utility>
 
-#include "interface/lumen/manager/exceptions.h"
+#include "interface/lumen/exceptions.h"
 #include "interface/lumen/package/package.h"
 
-namespace interfaceengine::lumen::manager {
+namespace interfaceengine::lumen {
 
 void LumenManager::LoadLumPackage(const std::string& path,
                                   SDL_Renderer* renderer) {
@@ -47,4 +47,4 @@ void LumenManager::RemovePackage(const std::string& package_name) {
     throw PackageNotFoundError("LumenManager::RemovePackage", package_name);
 }
 
-}  // namespace interfaceengine::lumen::manager
+}  // namespace interfaceengine::lumen

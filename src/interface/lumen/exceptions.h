@@ -1,14 +1,14 @@
 // Copyright 2026 maxim (necromax) alekseenko
 
-#ifndef SRC_INTERFACE_LUMEN_MANAGER_EXCEPTIONS_H_
-#define SRC_INTERFACE_LUMEN_MANAGER_EXCEPTIONS_H_
+#ifndef SRC_INTERFACE_LUMEN_EXCEPTIONS_H_
+#define SRC_INTERFACE_LUMEN_EXCEPTIONS_H_
 
 #include <stdexcept>
 #include <string>
 
 #include "interface/dll.h"
 
-namespace interfaceengine::lumen::manager {
+namespace interfaceengine::lumen {
 
 class INTERFACE_INTERNAL ManagerException : public std::runtime_error {
  public:
@@ -32,6 +32,6 @@ class INTERFACE_INTERNAL PackageAlreadyExistsError : public ManagerException {
                          + "\" already exists.") {}
 };
 
-}  // namespace interfaceengine::lumen::manager
+}  // namespace interfaceengine::lumen
 
-#endif  // SRC_INTERFACE_LUMEN_MANAGER_EXCEPTIONS_H_
+#endif  // SRC_INTERFACE_LUMEN_EXCEPTIONS_H_

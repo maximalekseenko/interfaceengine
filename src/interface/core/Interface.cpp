@@ -2,19 +2,11 @@
 
 #include "interface/core/interface.h"
 
-#include <necroutils/colexc.h>
-#include <necroutils/logger.h>
-
-#include <memory>
-#include <stack>
 #include <string>
 #include <utility>
 
 #include "interface/core/interface_impl.h"
 #include "interface/core/settings.h"
-#include "interface/lumen/manager/manager.h"
-#include "interface/misc/rect.h"
-#include "interface/window/manager.h"
 
 Interface::Interface() : impl_{new Impl()} { impl_->self = this; }
 Interface::~Interface() { delete impl_; }

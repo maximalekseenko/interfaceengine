@@ -13,7 +13,6 @@
 #include <vector>
 
 #include "interface/core/settings.h"
-#include "interface/lumen/manager/manager.h"
 #include "interface/misc/rect.h"
 #include "interface/render/render_request.h"
 #include "interface/window/manager.h"

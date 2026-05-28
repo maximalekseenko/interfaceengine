@@ -100,8 +100,8 @@ target_link_libraries(interfaceengine
         SDL3::SDL3
         SDL3_image::SDL3_image
         SDL3_ttf::SDL3_ttf
-        interfaceengine::lumen::manager
-        interfaceengine::window
+        interfaceengine_lumen
+        interfaceengine_window
         interfaceengine_gui
     PUBLIC
         necroutils::necroutils

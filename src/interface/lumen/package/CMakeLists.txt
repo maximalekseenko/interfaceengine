@@ -6,7 +6,7 @@ target_link_libraries(interfaceengine_lumen_package
         necroutils::necroutils
     PUBLIC
         interfaceengine_interface
-        interfaceengine::lumen::object
+        interfaceengine_lumen_object
 )
 
 target_sources(interfaceengine_lumen_package

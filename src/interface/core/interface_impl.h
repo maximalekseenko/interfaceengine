@@ -13,7 +13,7 @@
 #include "interface/core/interface.h"
 #include "interface/core/settings.h"
 #include "interface/gui/manager.h"
-#include "interface/lumen/manager/manager.h"
+#include "interface/lumen/manager.h"
 #include "interface/misc/rect.h"
 #include "interface/window/manager.h"
 
@@ -32,7 +32,7 @@ struct Interface::Impl {
   Logger logger;
 
   /// @brief Lumen manager for this interface.
-  interfaceengine::lumen::manager::LumenManager lumen_manager;
+  interfaceengine::lumen::LumenManager lumen_manager;
 
   /// @brief Window manager for this interface.
   interfaceengine::window::WindowManager window_manager;

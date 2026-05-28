@@ -4,8 +4,8 @@ add_library(interfaceengine::lumen::object ALIAS interfaceengine_lumen_object)
 target_link_libraries(interfaceengine_lumen_object
     PRIVATE
         SDL3_image::SDL3_image
-    PUBLIC
         interfaceengine_interface
+    PUBLIC
         SDL3::SDL3
 )
 

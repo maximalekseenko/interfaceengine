@@ -1,7 +1,7 @@
 // Copyright 2026 maxim (necromax) alekseenko
 
-#ifndef SRC_INTERFACE_LUMEN_MANAGER_MANAGER_H_
-#define SRC_INTERFACE_LUMEN_MANAGER_MANAGER_H_
+#ifndef SRC_INTERFACE_LUMEN_MANAGER_H_
+#define SRC_INTERFACE_LUMEN_MANAGER_H_
 
 #include <SDL3/SDL_render.h>
 
@@ -13,7 +13,7 @@
 #include "interface/dll.h"
 #include "interface/lumen/package/package.h"
 
-namespace interfaceengine::lumen::manager {
+namespace interfaceengine::lumen {
 
 /// @brief A class for loading and managing lumens.
 class INTERFACE_INTERNAL LumenManager {
@@ -51,6 +51,6 @@ class INTERFACE_INTERNAL LumenManager {
   std::unordered_map<std::string, LumPackagePtr> loader_packages_;
 };
 
-}  // namespace interfaceengine::lumen::manager
+}  // namespace interfaceengine::lumen
 
-#endif  // SRC_INTERFACE_LUMEN_MANAGER_MANAGER_H_
+#endif  // SRC_INTERFACE_LUMEN_MANAGER_H_
