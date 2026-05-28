@@ -46,7 +46,7 @@ void Interface::SetRootGuiComponent(
 void Interface::SendMessageToGui(
     interfaceengine::gui::Component::Message message,
     interfaceengine::gui::Component::Id receiver_id, bool single_receiver) {
-  // impl_->gui_manager_.DispatchMessage(message, receiver_id, single_receiver);
+  impl_->gui_manager_.DispatchMessage(message, receiver_id, single_receiver);
 }
 
 void Interface::Quit() { impl_->is_running = false; }

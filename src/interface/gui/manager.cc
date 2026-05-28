@@ -2,10 +2,15 @@
 
 #include "interface/gui/manager.h"
 
+#include <necroutils/colexc.h>
+
 #include <stack>
 #include <utility>
+#include <vector>
 
 #include "interface/gui/component.h"
+#include "interface/gui/lumen_rules.h"
+#include "interface/misc/rect.h"
 
 namespace interfaceengine::gui {
 
@@ -28,13 +33,13 @@ void Manager::DispatchMessage(Component::Message message,
       if (single_receiver) break;
     }
 
-    // Add children to stack.
+    // Add children to queue.
     for (auto& component_child : component->children)
       component_queue.push(component_child.get());
   }
 }
 
-void Manager::DispatchMoveOver(const MouseEvent& event) {
+void Manager::DispatchMouseOver(const MouseEvent& event) {
   std::stack<Component*> component_queue;
   component_queue.push(root_component_.get());
 
@@ -45,13 +50,13 @@ void Manager::DispatchMoveOver(const MouseEvent& event) {
     // Execute event on this component.
     component->OnMouseOver(event);
 
-    // Add children to stack.
+    // Add children to queue.
     for (auto& component_child : component->children)
       component_queue.push(component_child.get());
   }
 }
 
-void Manager::DispatchMoveClick(const MouseEvent& event) {
+void Manager::DispatchMouseClick(const MouseEvent& event) {
   std::stack<Component*> component_queue;
   component_queue.push(root_component_.get());
 
@@ -62,7 +67,49 @@ void Manager::DispatchMoveClick(const MouseEvent& event) {
     // Execute event on this component.
     component->OnMouseClick(event);
 
-    // Add children to stack.
+    // Add children to queue.
+    for (auto& component_child : component->children)
+      component_queue.push(component_child.get());
+  }
+}
+
+void Manager::GatherRenderRequests(
+    std::vector<render::RenderRequest>& out_requests) {
+  std::stack<Component*> component_queue;
+  component_queue.push(root_component_.get());
+
+  while (!component_queue.empty()) {
+    Component* component = component_queue.top();
+    component_queue.pop();
+
+    // Gather lumen rules.
+    auto component_rules = component->GetLumenRules();
+
+    for (auto lumen_rule : component_rules) {
+      render::RenderRequest new_render_request{
+          .package_name = lumen_rule.package_name,
+          .lumen_name = lumen_rule.lumen_name,
+          .data = lumen_rule.data,
+          .params = lumen_rule.params,
+      };
+
+      PosPixel component_x, component_y, component_w, component_h;
+      component->GetSelfRect(&component_x, &component_y, &component_w,
+                             &component_h);
+
+      GetRect(&new_render_request.x, &new_render_request.y,        //
+              &new_render_request.w, &new_render_request.h,        //
+              component_x, component_y, component_w, component_h,  //
+              lumen_rule.x_percent, lumen_rule.x_offset,           //
+              lumen_rule.y_percent, lumen_rule.y_offset,           //
+              lumen_rule.w_percent, lumen_rule.w_offset,           //
+              lumen_rule.h_percent, lumen_rule.h_offset,           //
+              lumen_rule.horizontal_alignment, lumen_rule.vertical_alignment);
+
+      out_requests.push_back(new_render_request);
+    }
+
+    // Add children to queue.
     for (auto& component_child : component->children)
       component_queue.push(component_child.get());
   }

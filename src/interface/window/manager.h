@@ -9,7 +9,7 @@
 #include <memory>
 
 #include "interface/dll.h"
-#include "interface/window/render_rules.h"
+#include "interface/window/render_command.h"
 
 namespace interfaceengine::window {
 
@@ -37,7 +37,7 @@ class INTERFACE_INTERNAL WindowManager {
 
   /// @brief Renders texture on the screen.
   /// @param texture SDL texture to render.
-  void RenderTexture(SDL_Texture* texture, const RenderRules& render_rules);
+  void RenderTexture(const RenderCommand& render_command);
 
   /// @brief Returns current window size.
   /// @param[out] out_w Current width of the window.

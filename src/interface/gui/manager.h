@@ -7,7 +7,8 @@
 
 #include "interface/dll.h"
 #include "interface/event.h"
-#include "interface/gui/component.h"  // TODO(necromax): rename to just component
+#include "interface/gui/component.h"
+#include "interface/render/render_request.h"
 
 namespace interfaceengine::gui {
 
@@ -24,14 +25,14 @@ class INTERFACE_INTERNAL Manager {
 
   void SetNewRootComponent(Component::Ptr new_root_component);
 
-  // std::vector<>
-
   void DispatchMessage(Component::Message message, Component::Id receiver_id,
                        bool single_receiver);
 
-  void DispatchMoveOver(const MouseEvent& event);
+  void DispatchMouseOver(const MouseEvent& event);
 
-  void DispatchMoveClick(const MouseEvent& event);
+  void DispatchMouseClick(const MouseEvent& event);
+
+  void GatherRenderRequests(std::vector<render::RenderRequest>& out_requests);
 
   void UpdateForWindowSize(int window_w, int window_h);
 

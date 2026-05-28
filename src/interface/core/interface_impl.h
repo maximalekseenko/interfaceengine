@@ -60,15 +60,6 @@ struct Interface::Impl {
   /// @brief Delays the tickrate down to fps setting.
   void TickDelay();
 
-  /// @brief Converts lumen rules of a gui component
-  /// to render rules of window manager.
-  /// @param gui_component Component this lumen rule belongs to.
-  /// @param lumen_rules Lumen rule to convert.
-  /// @return Render rules for rendering a lumen.
-  interfaceengine::window::RenderRules MakeRenderRules(
-      const interfaceengine::gui::Component* gui_component,
-      const LumenRules& lumen_rules);
-
   void UpdateRootComponentSize();
 };
 

@@ -41,52 +41,54 @@ void WindowManager::ClearRender() { SDL_RenderClear(sdl_renderer_); }
 
 void WindowManager::ApplyRender() { SDL_RenderPresent(sdl_renderer_); }
 
-void WindowManager::RenderTexture(struct SDL_Texture* texture,
-                                  const RenderRules& renderRules) {
-  SDL_FRect dst = {.x = renderRules.x,
-                   .y = renderRules.y,
-                   .w = renderRules.w,
-                   .h = renderRules.h};
+void WindowManager::RenderTexture(const RenderCommand& render_command) {
+  SDL_FRect dst = {.x = render_command.x,
+                   .y = render_command.y,
+                   .w = render_command.w,
+                   .h = render_command.h};
 
   // Fix width and height for lumen aspect-based defines.
-  if (renderRules.w == 0 || renderRules.h == 0) {
+  if (render_command.w == 0 || render_command.h == 0) {
     float texture_w, texture_h;
-    SDL_GetTextureSize(texture, &texture_w, &texture_h);
+    SDL_GetTextureSize(render_command.texture, &texture_w, &texture_h);
 
-    if (renderRules.w == 0 && renderRules.h == 0) {
+    if (render_command.w == 0 && render_command.h == 0) {
       dst.w = texture_w;
       dst.h = texture_h;
-    } else if (renderRules.w != 0) {
-      dst.w = renderRules.w;
-      dst.h = static_cast<float>(renderRules.w) * texture_h / texture_w;
-    } else {  // renderRules.h != 0
-      dst.w = static_cast<float>(renderRules.h) * texture_w / texture_h;
+    } else if (render_command.w != 0) {
+      dst.w = render_command.w;
+      dst.h = static_cast<float>(render_command.w) * texture_h / texture_w;
+    } else {  // render_command.h != 0
+      dst.w = static_cast<float>(render_command.h) * texture_w / texture_h;
       dst.h = texture_h;
     }
   }
 
   // Fix for anchors.
-  if (renderRules.horizontal_anchor == HorizontalAlignment::Center)
+  if (render_command.params.horizontal_anchor == HorizontalAlignment::Center)
     dst.x -= dst.w / 2;
-  else if (renderRules.horizontal_anchor == HorizontalAlignment::Right)
+  else if (render_command.params.horizontal_anchor
+           == HorizontalAlignment::Right)
     dst.x -= dst.w;
-  if (renderRules.vertical_anchor == VerticalAlignment::Center)
+  if (render_command.params.vertical_anchor == VerticalAlignment::Center)
     dst.y -= dst.h / 2;
-  else if (renderRules.vertical_anchor == VerticalAlignment::Bottom)
+  else if (render_command.params.vertical_anchor == VerticalAlignment::Bottom)
     dst.y -= dst.h;
 
   // Render texture.
   constexpr float kRotationEpsilon = 0.001f;  // TODO(necromax) maybe parameter?
   bool render_success;
-  if (std::abs(renderRules.rotation_angle) < kRotationEpsilon) {
-    render_success = SDL_RenderTexture(sdl_renderer_, texture, nullptr, &dst);
+  if (std::abs(render_command.params.rotation_angle) < kRotationEpsilon) {
+    render_success = SDL_RenderTexture(sdl_renderer_, render_command.texture,
+                                       nullptr, &dst);
   } else {
-    SDL_FPoint rotation_center{
-        .x = dst.w * renderRules.rot_x_percent + renderRules.rot_x_offset,
-        .y = dst.h * renderRules.rot_y_percent + renderRules.rot_y_offset};
-    render_success = SDL_RenderTextureRotated(sdl_renderer_, texture, nullptr,
-                                              &dst, renderRules.rotation_angle,
-                                              &rotation_center, SDL_FLIP_NONE);
+    SDL_FPoint rotation_center{.x = dst.w * render_command.params.rot_x_percent
+                                    + render_command.params.rot_x_offset,
+                               .y = dst.h * render_command.params.rot_y_percent
+                                    + render_command.params.rot_y_offset};
+    render_success = SDL_RenderTextureRotated(
+        sdl_renderer_, render_command.texture, nullptr, &dst,
+        render_command.params.rotation_angle, &rotation_center, SDL_FLIP_NONE);
   }
 
   if (!render_success) throw RenderError(SDL_GetError());
