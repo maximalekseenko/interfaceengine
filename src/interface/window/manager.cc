@@ -82,10 +82,11 @@ void WindowManager::RenderTexture(const RenderCommand& render_command) {
     render_success = SDL_RenderTexture(sdl_renderer_, render_command.texture,
                                        nullptr, &dst);
   } else {
-    SDL_FPoint rotation_center{.x = dst.w * render_command.params.rot_x_percent
-                                    + render_command.params.rot_x_offset,
-                               .y = dst.h * render_command.params.rot_y_percent
-                                    + render_command.params.rot_y_offset};
+    SDL_FPoint rotation_center{
+        .x = dst.w * render_command.params.rot_pivot_x.percent
+             + render_command.params.rot_pivot_x.offset,
+        .y = dst.h * render_command.params.rot_pivot_y.percent
+             + render_command.params.rot_pivot_y.offset};
     render_success = SDL_RenderTextureRotated(
         sdl_renderer_, render_command.texture, nullptr, &dst,
         render_command.params.rotation_angle, &rotation_center, SDL_FLIP_NONE);

@@ -17,8 +17,7 @@ struct INTERFACE_API RenderParams {
   uint16_t color_mod;
 
   PosAngle rotation_angle{0};
-  PosPercent rot_x_percent{0.5}, rot_y_percent{0.5};
-  PosPixel rot_x_offset{0}, rot_y_offset{0};
+  RelScalar rot_pivot_x{.5, 0}, rot_pivot_y{.5, 0};
 };
 
 }  // namespace interfaceengine::render

@@ -35,7 +35,7 @@ void GuiManager::DispatchMessage(Component::Message message,
     }
 
     // Add children to queue.
-    for (auto& component_child : component->children)
+    for (auto& component_child : component->children_)
       component_queue.push(component_child.get());
   }
 }
@@ -49,10 +49,11 @@ void GuiManager::DispatchMouseOver(const MouseEvent& event) {
     component_queue.pop();
 
     // Execute event on this component.
-    component->OnMouseOver(event);
+    if (component->IsPointWithin(event.x, event.y))
+      component->OnMouseOver(event);
 
     // Add children to queue.
-    for (auto& component_child : component->children)
+    for (auto& component_child : component->children_)
       component_queue.push(component_child.get());
   }
 }
@@ -66,10 +67,11 @@ void GuiManager::DispatchMouseClick(const MouseEvent& event) {
     component_queue.pop();
 
     // Execute event on this component.
-    component->OnMouseClick(event);
+    if (component->IsPointWithin(event.x, event.y))
+      component->OnMouseClick(event);
 
     // Add children to queue.
-    for (auto& component_child : component->children)
+    for (auto& component_child : component->children_)
       component_queue.push(component_child.get());
   }
 }
@@ -98,27 +100,24 @@ void GuiManager::GatherRenderRequests(
       component->GetSelfRect(&component_x, &component_y, &component_w,
                              &component_h);
 
-      GetRect(&new_render_request.x, &new_render_request.y,        //
-              &new_render_request.w, &new_render_request.h,        //
-              component_x, component_y, component_w, component_h,  //
-              lumen_rule.x_percent, lumen_rule.x_offset,           //
-              lumen_rule.y_percent, lumen_rule.y_offset,           //
-              lumen_rule.w_percent, lumen_rule.w_offset,           //
-              lumen_rule.h_percent, lumen_rule.h_offset,           //
+      GetRect(&new_render_request.x, &new_render_request.y,            //
+              &new_render_request.w, &new_render_request.h,            //
+              component_x, component_y, component_w, component_h,      //
+              lumen_rule.x, lumen_rule.y, lumen_rule.w, lumen_rule.h,  //
               lumen_rule.horizontal_alignment, lumen_rule.vertical_alignment);
 
       out_requests.push_back(new_render_request);
     }
 
     // Add children to queue.
-    for (auto& component_child : component->children)
+    for (auto& component_child : component->children_)
       component_queue.push(component_child.get());
   }
 }
 
 void GuiManager::UpdateForWindowSize(int window_w, int window_h) {
-  root_component_->SetWidth(0, window_w);
-  root_component_->SetHeight(0, window_h);
+  root_component_->SetWidth({0, static_cast<PosPixel>(window_w)});
+  root_component_->SetHeight({0, static_cast<PosPixel>(window_h)});
 }
 
 }  // namespace interfaceengine::gui

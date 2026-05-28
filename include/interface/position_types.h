@@ -15,6 +15,11 @@ using PosPixel = float;
 /// @brief Position of an object in percent (usually, of a parent).
 using PosPercent = float;
 
+struct RelScalar {
+  PosPercent percent{0};
+  PosPixel offset{0};
+};
+
 /// @brief Rotation of an object in degrees (usually counter-clockwise).
 using PosAngle = double;
 

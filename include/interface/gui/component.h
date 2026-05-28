@@ -3,7 +3,6 @@
 #ifndef INCLUDE_INTERFACE_GUI_COMPONENT_H_
 #define INCLUDE_INTERFACE_GUI_COMPONENT_H_
 
-#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -45,43 +44,26 @@ class INTERFACE_API Component {
   /// @param child_ptr A unique pointer to the child component.
   void AddChildComponent(Ptr child_ptr);
 
-  /// @brief Sets the width.
-  /// @param percent The width percentage of the parent width.
-  /// @param offset An additional width offset in pixels.
-  /// @note Does not affect root components.
-  void SetWidth(PosPercent const& percent, PosPixel const& offset);
+  void SetHorizontalPosition(RelScalar value,
+                             HorizontalAlignment const& alignment) {
+    x_ = value;
+    horizontal_alignment_ = alignment;
+  }
 
-  /// @brief Sets the horizontal position to left.
-  /// @param percent The horizontal alignment percentage of the parent width.
-  /// @param offset An additional horizontal alignment offset in pixels.
-  /// @note Does not affect root components.
-  void SetHorizontalPosition(PosPercent const& percent, PosPixel const& offset,
-                             HorizontalAlignment const& alignment);
+  void SetVerticalPosition(RelScalar value,
+                           VerticalAlignment const& alignment) {
+    y_ = value;
+    vertical_alignment_ = alignment;
+  }
 
-  /// @brief Sets the height.
-  /// @param percent The height percentage of the parent height.
-  /// @param offset An additional height offset in pixels.
-  /// @note Does not affect root components.
-  void SetHeight(PosPercent const& percent, PosPixel const& offset);
+  void SetWidth(RelScalar value) { w_ = value; }
 
-  /// @brief Sets the vertical position.
-  /// @param percent The vertical alignment percentage of the parent height.
-  /// @param offset An additional vertical alignment offset in pixels.
-  /// @param alignment The vertical alignment.
-  /// @note Does not affect root components.
-  void SetVerticalPosition(PosPercent const& percent, PosPixel const& offset,
-                           VerticalAlignment const& alignment);
+  void SetHeight(RelScalar value) { h_ = value; }
 
-  /// @brief Retrieves a calculated rect of the component.
-  /// @param[out] out_x The x-coordinate of the
-  /// top-left corner of the component.
-  /// @param[out] out_y The y-coordinate of the
-  /// top-left corner of the component.
-  /// @param[out] out_w The width of the component.
-  /// @param[out] out_h The height of the component.
-  /// @note You can pass a `nullptr` if an output is not required.
   void GetSelfRect(PosPixel* out_x, PosPixel* out_y, PosPixel* out_w,
                    PosPixel* out_h) const;
+
+  bool IsPointWithin(PosPixel x, PosPixel y);
 
  private:  // -------------------- PRIVATE MEMBERS --------------------
   friend class GuiManager;
@@ -89,17 +71,7 @@ class INTERFACE_API Component {
   /// @brief Unique identifier for this component.
   Id id_;
 
-  /// @brief Size of the component in percent of a parent.
-  PosPercent w_percent_{1}, h_percent_{1};
-
-  /// @brief An additional size of the component in pixels.
-  PosPixel w_offset_{0}, h_offset_{0};
-
-  /// @brief Position of the component in percent from alignment point.
-  PosPercent x_percent_{0}, y_percent_{0};
-
-  /// @brief An additional postion offset of the component in pixels.
-  PosPixel x_offset_{0}, y_offset_{0};
+  RelScalar x_{0, 0}, y_{0, 0}, w_{1, 0}, h_{1, 0};
 
   /// @brief Horizontal alignment of the component to its perent.
   HorizontalAlignment horizontal_alignment_{HorizontalAlignment::Left};
@@ -109,10 +81,10 @@ class INTERFACE_API Component {
 
   /// @brief Parent component to this one.
   /// @note Is not set for root components.
-  Component* parent{nullptr};
+  Component* parent_{nullptr};
 
   /// @brief List of pointers to child components.
-  std::vector<Ptr> children;
+  std::vector<Ptr> children_;
 };
 
 }  // namespace interfaceengine::gui

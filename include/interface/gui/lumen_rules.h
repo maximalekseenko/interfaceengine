@@ -18,9 +18,8 @@ struct INTERFACE_API LumenRules {
 
   std::string data{""};
 
-  PosPercent x_percent{0}, y_percent{0}, w_percent{1}, h_percent{1};
+  RelScalar x{0, 0}, y{0, 0}, w{1, 0}, h{1, 0};
 
-  PosPixel x_offset{0}, y_offset{0}, w_offset{0}, h_offset{0};
   HorizontalAlignment horizontal_alignment{HorizontalAlignment::Left};
   VerticalAlignment vertical_alignment{VerticalAlignment::Top};
 

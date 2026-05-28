@@ -2,17 +2,18 @@
 
 #include "interface/misc/rect.h"
 
-void GetRect(PosPixel* out_x, PosPixel* out_y, PosPixel* out_w, PosPixel* out_h,
-             PosPixel parent_x, PosPixel parent_y, PosPixel parent_w,
-             PosPixel parent_h, PosPercent x_percent, PosPixel x_offset,
-             PosPercent y_percent, PosPixel y_offset, PosPercent w_percent,
-             PosPixel w_offset, PosPercent h_percent, PosPixel h_offset,
-             HorizontalAlignment horizontal_alignment,
+void GetRect(PosPixel* out_x, PosPixel* out_y,          //
+             PosPixel* out_w, PosPixel* out_h,          //
+             PosPixel parent_x, PosPixel parent_y,      //
+             PosPixel parent_w, PosPixel parent_h,      //
+             RelScalar self_x, RelScalar self_y,        //
+             RelScalar self_w, RelScalar self_h,        //
+             HorizontalAlignment horizontal_alignment,  //
              VerticalAlignment vertical_alignment) {
-  PosPixel self_width = parent_w * w_percent + w_offset;
-  PosPixel self_height = parent_h * h_percent + h_offset;
-  PosPixel self_rel_x = parent_w * x_percent + x_offset;
-  PosPixel self_rel_y = parent_h * y_percent + y_offset;
+  PosPixel self_width = parent_w * self_w.percent + self_w.offset;
+  PosPixel self_height = parent_h * self_h.percent + self_h.offset;
+  PosPixel self_rel_x = parent_w * self_x.percent + self_x.offset;
+  PosPixel self_rel_y = parent_h * self_y.percent + self_y.offset;
   PosPixel parent_left = parent_x;
   PosPixel parent_right = parent_x + parent_w;
   PosPixel parent_center_x = parent_x + parent_w / 2;

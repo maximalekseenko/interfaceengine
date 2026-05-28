@@ -6,15 +6,13 @@
 #include "interface/dll.h"
 #include "interface/position_types.h"
 
-INTERFACE_INTERNAL void GetRect(PosPixel* out_x, PosPixel* out_y,
-                                PosPixel* out_w, PosPixel* out_h,
-                                PosPixel parent_x, PosPixel parent_y,
-                                PosPixel parent_w, PosPixel parent_h,
-                                PosPercent x_percent, PosPixel x_offset,
-                                PosPercent y_percent, PosPixel y_offset,
-                                PosPercent w_percent, PosPixel w_offset,
-                                PosPercent h_percent, PosPixel h_offset,
-                                HorizontalAlignment horizontal_alignment,
+INTERFACE_INTERNAL void GetRect(PosPixel* out_x, PosPixel* out_y,          //
+                                PosPixel* out_w, PosPixel* out_h,          //
+                                PosPixel parent_x, PosPixel parent_y,      //
+                                PosPixel parent_w, PosPixel parent_h,      //
+                                RelScalar self_x, RelScalar self_y,        //
+                                RelScalar self_w, RelScalar self_h,        //
+                                HorizontalAlignment horizontal_alignment,  //
                                 VerticalAlignment vertical_alignment);
 
 INTERFACE_INTERNAL bool IsWithinRect(PosPixel x, PosPixel y, PosPixel rect_x,
