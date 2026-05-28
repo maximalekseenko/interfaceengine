@@ -84,8 +84,7 @@ class INTERFACE_API Component {
                    PosPixel* out_h) const;
 
  private:  // -------------------- PRIVATE MEMBERS --------------------
-  friend class Interface;
-  friend class Manager;
+  friend class GuiManager;
 
   /// @brief Unique identifier for this component.
   Id id_;

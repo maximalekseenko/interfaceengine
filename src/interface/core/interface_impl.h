@@ -38,7 +38,7 @@ struct Interface::Impl {
   interfaceengine::window::WindowManager window_manager;
 
   /// @brief Core GUI component.
-  interfaceengine::gui::Manager gui_manager_;
+  interfaceengine::gui::GuiManager gui_manager_;
 
   // Component::Ptr root_gui_component{std::make_unique<Component>()};
 

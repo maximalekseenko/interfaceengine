@@ -13,12 +13,12 @@
 namespace interfaceengine::gui {
 
 /// @brief A class for loading and managing lumens.
-class INTERFACE_INTERNAL Manager {
+class INTERFACE_INTERNAL GuiManager {
  public:  // -------------------- CONSTRUCTORS --------------------
-  Manager() = default;
+  GuiManager() = default;
 
  public:  // -------------------- DESTRUCTORS --------------------
-  ~Manager() = default;
+  ~GuiManager() = default;
 
  public:  // -------------------- PUBLIC METHODS --------------------
   Component* root_component() { return root_component_.get(); }

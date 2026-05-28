@@ -14,12 +14,13 @@
 
 namespace interfaceengine::gui {
 
-void Manager::SetNewRootComponent(Component::Ptr new_root_component) {
+void GuiManager::SetNewRootComponent(Component::Ptr new_root_component) {
   root_component_ = std::move(new_root_component);
 }
 
-void Manager::DispatchMessage(Component::Message message,
-                              Component::Id receiver_id, bool single_receiver) {
+void GuiManager::DispatchMessage(Component::Message message,
+                                 Component::Id receiver_id,
+                                 bool single_receiver) {
   std::stack<Component*> component_queue;
   component_queue.push(root_component_.get());
 
@@ -39,7 +40,7 @@ void Manager::DispatchMessage(Component::Message message,
   }
 }
 
-void Manager::DispatchMouseOver(const MouseEvent& event) {
+void GuiManager::DispatchMouseOver(const MouseEvent& event) {
   std::stack<Component*> component_queue;
   component_queue.push(root_component_.get());
 
@@ -56,7 +57,7 @@ void Manager::DispatchMouseOver(const MouseEvent& event) {
   }
 }
 
-void Manager::DispatchMouseClick(const MouseEvent& event) {
+void GuiManager::DispatchMouseClick(const MouseEvent& event) {
   std::stack<Component*> component_queue;
   component_queue.push(root_component_.get());
 
@@ -73,7 +74,7 @@ void Manager::DispatchMouseClick(const MouseEvent& event) {
   }
 }
 
-void Manager::GatherRenderRequests(
+void GuiManager::GatherRenderRequests(
     std::vector<render::RenderRequest>& out_requests) {
   std::stack<Component*> component_queue;
   component_queue.push(root_component_.get());
@@ -115,7 +116,7 @@ void Manager::GatherRenderRequests(
   }
 }
 
-void Manager::UpdateForWindowSize(int window_w, int window_h) {
+void GuiManager::UpdateForWindowSize(int window_w, int window_h) {
   root_component_->SetWidth(0, window_w);
   root_component_->SetHeight(0, window_h);
 }
