@@ -3,9 +3,9 @@ add_library(interfaceengine::gui ALIAS interfaceengine_gui)
 
 target_link_libraries(interfaceengine_gui
     PRIVATE
+        interfaceengine_interface
         necroutils::necroutils
     PUBLIC 
-        interfaceengine_interface
         SDL3::SDL3
 )
 

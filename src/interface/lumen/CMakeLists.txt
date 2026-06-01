@@ -2,8 +2,9 @@ add_library(interfaceengine_lumen STATIC)
 add_library(interfaceengine::lumen::manager ALIAS interfaceengine_lumen)
 
 target_link_libraries(interfaceengine_lumen
-    PUBLIC 
+    PRIVATE
         interfaceengine_interface
+    PUBLIC
         interfaceengine_lumen_package
         SDL3::SDL3
 )

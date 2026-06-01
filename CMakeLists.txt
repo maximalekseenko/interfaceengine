@@ -19,7 +19,8 @@ FetchContent_Declare(
     SDL3
     GIT_REPOSITORY https://github.com/libsdl-org/SDL
     GIT_TAG        release-3.4.8
-    FIND_PACKAGE_ARGS REQUIRED)
+    FIND_PACKAGE_ARGS)
+set(SDL_INSTALL ON)
 FetchContent_MakeAvailable(SDL3)
 
 # Fetch SDL3_image.
@@ -28,6 +29,13 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_image
     GIT_TAG        release-3.4.4
     FIND_PACKAGE_ARGS)
+set(SDLIMAGE_INSTALL ON)
+set(SDLIMAGE_VENDORED ON)
+set(SDLIMAGE_AVIF ON)
+set(SDLIMAGE_BMP ON)
+set(SDLIMAGE_JPG ON)
+set(SDLIMAGE_WEBP ON)
+set(SDLIMAGE_PNG_LIBPNG OFF) 
 FetchContent_MakeAvailable(SDL3_image)
 
 # Fetch SDL3_ttf.
@@ -36,6 +44,9 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf
     GIT_TAG        release-3.2.2
     FIND_PACKAGE_ARGS)
+set(SDLTTF_INSTALL ON)
+set(SDLTTF_VENDORED ON)
+set(SDLTTF_HARFBUZZ OFF)
 FetchContent_MakeAvailable(SDL3_ttf)
 
 # Fetch necroutils.
@@ -55,6 +66,30 @@ target_compile_features(interfaceengine_interface  INTERFACE cxx_std_20)
 set_target_properties(interfaceengine_interface PROPERTIES CXX_STANDARD_REQUIRED ON)
 
 target_compile_definitions(interfaceengine_interface INTERFACE INTERFACE_LOCAL)
+
+if(MSVC)
+    target_compile_options(interfaceengine_interface INTERFACE
+        /W4
+        /permissive-
+    )
+else()
+    target_compile_options(interfaceengine_interface INTERFACE
+        -W
+        -Wall 
+        -Wcast-qual
+        -Wextra
+        -Wsign-compare
+        -Wundef
+        -Wpointer-arith
+        -Wwrite-strings
+        -Wredundant-decls
+        -Wformat-security
+        -Wformat=2
+        -Winit-self
+        -Wnon-virtual-dtor
+        -Wsuggest-override
+    )
+endif()
 
 if(MINGW)
     target_link_options(interfaceengine_interface INTERFACE -static -static-libgcc -static-libstdc++)
@@ -97,12 +132,12 @@ target_include_directories(interfaceengine
 target_link_libraries(interfaceengine
     PRIVATE
         interfaceengine_interface
-        SDL3::SDL3
-        SDL3_image::SDL3_image
-        SDL3_ttf::SDL3_ttf
         interfaceengine_lumen
         interfaceengine_window
         interfaceengine_gui
+        SDL3::SDL3
+        SDL3_image::SDL3_image
+        SDL3_ttf::SDL3_ttf
     PUBLIC
         necroutils::necroutils
 )
