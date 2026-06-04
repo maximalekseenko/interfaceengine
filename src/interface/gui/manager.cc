@@ -21,59 +21,31 @@ void GuiManager::SetNewRootComponent(Component::Ptr new_root_component) {
 void GuiManager::DispatchMessage(Component::Message message,
                                  Component::Id receiver_id,
                                  bool single_receiver) {
-  std::stack<Component*> component_queue;
-  component_queue.push(root_component_.get());
-
-  while (!component_queue.empty()) {
-    Component* component = component_queue.top();
-    component_queue.pop();
-
-    // Execute event on this component.
+  TraverseComponents(root_component_.get(), [&](Component* component) {
     if (component->id() == receiver_id) {
       component->OnMessage(message);
-      if (single_receiver) break;
+      if (single_receiver) return true;
     }
-
-    // Add children to queue.
-    for (auto& component_child : component->children_)
-      component_queue.push(component_child.get());
-  }
+    return false;
+  });
 }
 
 void GuiManager::DispatchMouseOver(const MouseEvent& event) {
-  std::stack<Component*> component_queue;
-  component_queue.push(root_component_.get());
+  TraverseComponents(root_component_.get(), [&](Component* component) {
+    if (!component->IsPointWithin(event.x, event.y)) return false;
 
-  while (!component_queue.empty()) {
-    Component* component = component_queue.top();
-    component_queue.pop();
-
-    // Execute event on this component.
-    if (component->IsPointWithin(event.x, event.y))
-      component->OnMouseOver(event);
-
-    // Add children to queue.
-    for (auto& component_child : component->children_)
-      component_queue.push(component_child.get());
-  }
+    component->OnMouseOver(event);
+    return component->blocking();
+  });
 }
 
 void GuiManager::DispatchMouseClick(const MouseEvent& event) {
-  std::stack<Component*> component_queue;
-  component_queue.push(root_component_.get());
+  TraverseComponents(root_component_.get(), [&](Component* component) {
+    if (!component->IsPointWithin(event.x, event.y)) return false;
 
-  while (!component_queue.empty()) {
-    Component* component = component_queue.top();
-    component_queue.pop();
-
-    // Execute event on this component.
-    if (component->IsPointWithin(event.x, event.y))
-      component->OnMouseClick(event);
-
-    // Add children to queue.
-    for (auto& component_child : component->children_)
-      component_queue.push(component_child.get());
-  }
+    component->OnMouseClick(event);
+    return component->blocking();
+  });
 }
 
 void GuiManager::GatherRenderRequests(

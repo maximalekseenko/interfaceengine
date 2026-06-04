@@ -15,10 +15,6 @@
 namespace interfaceengine::gui {
 
 class INTERFACE_API Component {
- public:  // -------------------- CONSTRUCTOR --------------------
-  Component() = default;
-  virtual ~Component() = default;
-
  public:  // -------------------- TYPE DEFINITIONS --------------------
   /// @brief Pointer type for storing components.
   using Ptr = std::unique_ptr<Component>;
@@ -28,6 +24,10 @@ class INTERFACE_API Component {
 
   /// @brief Type of message that is being sent.
   using Message = std::string;
+
+ public:  // -------------------- CONSTRUCTOR --------------------
+  Component() = default;
+  virtual ~Component() = default;
 
  public:  // -------------------- VIRTUAL MEMBERS --------------------
   virtual std::vector<LumenRules> GetLumenRules() { return {}; }
@@ -39,6 +39,10 @@ class INTERFACE_API Component {
   void SetId(Id id) { id_ = id; }
 
   Id id() { return id_; }
+
+  void SetBlocking(bool value) { blocking_ = value; }
+
+  bool blocking() { return blocking_; }
 
   /// @brief Adds child component to this component.
   /// @param child_ptr A unique pointer to the child component.
@@ -70,6 +74,8 @@ class INTERFACE_API Component {
 
   /// @brief Unique identifier for this component.
   Id id_;
+
+  bool blocking_{true};
 
   RelScalar x_{0, 0}, y_{0, 0}, w_{1, 0}, h_{1, 0};
 

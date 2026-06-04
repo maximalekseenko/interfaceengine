@@ -3,6 +3,7 @@
 #ifndef SRC_INTERFACE_GUI_MANAGER_H_
 #define SRC_INTERFACE_GUI_MANAGER_H_
 
+#include <stack>
 #include <vector>
 
 #include "interface/dll.h"
@@ -35,6 +36,16 @@ class INTERFACE_INTERNAL GuiManager {
   void GatherRenderRequests(std::vector<render::RenderRequest>& out_requests);
 
   void UpdateForWindowSize(int window_w, int window_h);
+
+ private:  // -------------------- PRIVATE METHODS --------------------
+  template <typename Func>
+  bool TraverseComponents(Component* component, Func&& func) {
+    for (auto it = component->children_.rbegin();
+         it != component->children_.rend(); ++it) {
+      if (TraverseComponents(it->get(), func)) return true;
+    }
+    return func(component);
+  }
 
  private:  // -------------------- PRIVATE MEMBERS --------------------
   Component::Ptr root_component_{nullptr};
