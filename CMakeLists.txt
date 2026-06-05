@@ -8,7 +8,8 @@ project(interfaceengine
 )
 
 # -------------------- OPTIONS --------------------
-option(INTERFACEENGINE_RUN_CPPLINT "Run cpplint (Google style tests) when building" ON)
+option(INTERFACEENGINE_INSTALL "Install interfaceengine and it's dependencies" ${PROJECT_IS_TOP_LEVEL})
+option(INTERFACEENGINE_RUN_CPPLINT "Run cpplint (Google style tests) when building" OFF)
 option(INTERFACEENGINE_COMPILE_DEFAULT_LUMC "Compile default lumcompiler additional tool" ON)
 
 # -------------------- FETCH LIBRARIES --------------------
@@ -20,7 +21,6 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/libsdl-org/SDL
     GIT_TAG        release-3.4.8
     FIND_PACKAGE_ARGS)
-set(SDL_INSTALL ON)
 FetchContent_MakeAvailable(SDL3)
 
 # Fetch SDL3_image.
@@ -29,7 +29,6 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_image
     GIT_TAG        release-3.4.4
     FIND_PACKAGE_ARGS)
-set(SDLIMAGE_INSTALL ON)
 set(SDLIMAGE_VENDORED ON)
 set(SDLIMAGE_AVIF ON)
 set(SDLIMAGE_BMP ON)
@@ -44,7 +43,6 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf
     GIT_TAG        release-3.2.2
     FIND_PACKAGE_ARGS)
-set(SDLTTF_INSTALL ON)
 set(SDLTTF_VENDORED ON)
 set(SDLTTF_HARFBUZZ OFF)
 FetchContent_MakeAvailable(SDL3_ttf)
@@ -53,7 +51,7 @@ FetchContent_MakeAvailable(SDL3_ttf)
 FetchContent_Declare(
     necroutils
     GIT_REPOSITORY https://github.com/maximalekseenko/necroutils
-    GIT_TAG        4920d61e7182176584dd447be388658683b47af1
+    GIT_TAG        db74f1de196acdef9a4251ca00115913a8a0e599
     FIND_PACKAGE_ARGS)
 FetchContent_MakeAvailable(necroutils)
 
@@ -102,11 +100,11 @@ target_include_directories(interfaceengine_interface
 )
 
 # -------------------- COMPILE SUBMODULES --------------------
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/interface/lumen")
+add_subdirectory("src/interface/lumen")
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/interface/window")
+add_subdirectory("src/interface/window")
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/interface/gui")
+add_subdirectory("src/interface/gui")
 
 if(INTERFACEENGINE_COMPILE_DEFAULT_LUMC)
     add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tools/lumcompiler")
@@ -139,7 +137,7 @@ target_link_libraries(interfaceengine
         SDL3_image::SDL3_image
         SDL3_ttf::SDL3_ttf
     PUBLIC
-        necroutils::necroutils
+        $<BUILD_INTERFACE:necroutils::necroutils>
 )
 
 target_sources(interfaceengine
@@ -176,41 +174,45 @@ if(INTERFACEENGINE_RUN_CPPLINT)
 endif()
 
 # -------------------- INSTALLATION --------------------
-# Install library
-install(TARGETS interfaceengine
-    EXPORT interfaceengineTargets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    RUNTIME DESTINATION bin
-    INCLUDES DESTINATION include
-)
+if(INTERFACEENGINE_INSTALL)
+    include(GNUInstallDirs)
+    include(CMakePackageConfigHelpers)
+    
+    install(TARGETS interfaceengine
+        EXPORT interfaceengineTargets
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    )
 
-# Install headers
-install(DIRECTORY include/ DESTINATION include)
+    install(DIRECTORY include/ 
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    )
 
-# Export for use with find_package
-install(EXPORT interfaceengineTargets
-    FILE interfaceengineTargets.cmake
-    NAMESPACE interfaceengine::
-    DESTINATION lib/cmake/interfaceengine
-)
+    install(EXPORT interfaceengineTargets
+        FILE interfaceengineTargets.cmake
+        NAMESPACE interfaceengine::
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/interfaceengine
+    )
 
-# -------------------- CONFIG PACKAGE --------------------
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-    "${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfigVersion.cmake"
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY AnyNewerVersion
-)
+    set(targets_export_name interfaceengineTargets)
 
-configure_package_config_file(
-    "${CMAKE_CURRENT_LIST_DIR}/cmake/interfaceengine-config.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfig.cmake"
-    INSTALL_DESTINATION lib/cmake/interfaceengine
-)
+    configure_package_config_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/interfaceengine-config.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfig.cmake
+        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/interfaceengine
+    )
 
-install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfigVersion.cmake"
-    DESTINATION lib/cmake/interfaceengine
-)
+    write_basic_package_version_file(
+        ${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfigVersion.cmake
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY AnyNewerVersion
+    )
+
+    install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/interfaceengineConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/interfaceengine
+    )
+endif()
