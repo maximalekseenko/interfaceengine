@@ -71,8 +71,7 @@ void Interface::Impl::HandleEvents() {
                                        .button = event.button.button,
                                        .x = event.button.x,
                                        .y = event.button.y});
-    if (event.type == SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED)
-      UpdateRootComponentSize();
+    if (event.type == SDL_EVENT_WINDOW_RESIZED) UpdateRootComponentSize();
   }
 }
 
