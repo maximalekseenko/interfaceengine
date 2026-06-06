@@ -6,20 +6,17 @@
 #include <SDL3/SDL_render.h>
 
 #include <istream>
-#include <memory>
 #include <string>
 #include <unordered_map>
 
 #include "interface/dll.h"
+#include "interface/lumen/package/loader.h"
 #include "interface/lumen/package/package.h"
 
 namespace interfaceengine::lumen {
 
 /// @brief A class for loading and managing lumens.
 class INTERFACE_INTERNAL LumenManager {
- public:  // -------------------- TYPES --------------------
-  using LumPackagePtr = std::unique_ptr<package::LumPackage>;
-
  public:  // -------------------- CONSTRUCTORS --------------------
   LumenManager() = default;
 
@@ -47,8 +44,10 @@ class INTERFACE_INTERNAL LumenManager {
   void RemovePackage(const std::string& package_name);
 
  private:  // -------------------- PRIVATE MEMBERS --------------------
+  package::LumPackageLoader package_loader;
+
   /// @brief A registry of loaded packages.
-  std::unordered_map<std::string, LumPackagePtr> loader_packages_;
+  std::unordered_map<std::string, package::LumPackage::Ptr> loader_packages_;
 };
 
 }  // namespace interfaceengine::lumen

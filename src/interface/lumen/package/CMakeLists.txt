@@ -12,4 +12,5 @@ target_link_libraries(interfaceengine_lumen_package
 target_sources(interfaceengine_lumen_package
     PRIVATE
         package.cc
+        loader.cc
 )

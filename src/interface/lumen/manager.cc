@@ -21,9 +21,7 @@ namespace interfaceengine::lumen {
 
 void LumenManager::LoadLumPackage(const std::string& path,
                                   SDL_Renderer* renderer) {
-  auto new_package = std::make_unique<package::LumPackage>();
-
-  new_package->LoadPackage(path, renderer);
+  auto new_package = package_loader.Load(path, renderer);
 
   auto emplace_result = loader_packages_.try_emplace(new_package->name(),
                                                      std::move(new_package));

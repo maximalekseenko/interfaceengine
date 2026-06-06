@@ -4,7 +4,7 @@
 
 #include <string>
 
-#include "lumcompiler/cpackage.h"
+#include "interface/lumen/package/loader.h"
 #include "lumcompiler/exceptions.h"
 
 int main(int argc, char* argv[]) {
@@ -29,6 +29,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  lumcompiler::LumCompilingPackage package;
-  package.CompileLumFile(argv[1], argv[2], renderer);
+  interfaceengine::lumen::package::LumPackageLoader package_loader;
+
+  package_loader.CompileFromLumdataFile(argv[1], argv[2], renderer);
 }

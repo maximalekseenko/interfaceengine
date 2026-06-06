@@ -16,7 +16,6 @@ target_include_directories(lumcompiler
 target_link_libraries(lumcompiler  
     PRIVATE 
         interfaceengine_interface
-        necroutils::necroutils
         interfaceengine::lumen::package
         SDL3::SDL3
 )
@@ -24,5 +23,4 @@ target_link_libraries(lumcompiler
 target_sources(lumcompiler
     PRIVATE
         main.cc
-        cpackage.cc
 )
