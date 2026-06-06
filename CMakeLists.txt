@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 
-include(FetchContent)
-include(GNUInstallDirs)
-include(CMakePackageConfigHelpers)
-
 # -------------------- PROJECT --------------------
 project(interfaceengine
     VERSION 1.0.0
@@ -18,26 +14,25 @@ option(INTERFACEENGINE_COMPILE_DEFAULT_LUMC "Compile default lumcompiler additio
 option(INTERFACEENGINE_INSTALL_DEFAULT_LUMC "Install default lumcompiler after compiling" ${PROJECT_IS_TOP_LEVEL})
 
 # -------------------- FETCH LIBRARIES --------------------
+include(FetchContent)
+
 # Fetch SDL3.
 FetchContent_Declare(
     SDL3
     GIT_REPOSITORY https://github.com/libsdl-org/SDL
-    GIT_TAG        release-3.4.8
-    FIND_PACKAGE_ARGS)
+    GIT_TAG        release-3.2.30
+    FIND_PACKAGE_ARGS 3.2
+)
 FetchContent_MakeAvailable(SDL3)
 
 # Fetch SDL3_image.
 FetchContent_Declare(
     SDL3_image
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_image
-    GIT_TAG        release-3.4.4
-    FIND_PACKAGE_ARGS)
+    GIT_TAG        release-3.2.6
+    FIND_PACKAGE_ARGS 3.2
+)
 set(SDLIMAGE_VENDORED ON)
-set(SDLIMAGE_AVIF ON)
-set(SDLIMAGE_BMP ON)
-set(SDLIMAGE_JPG ON)
-set(SDLIMAGE_WEBP ON)
-set(SDLIMAGE_PNG_LIBPNG OFF) 
 FetchContent_MakeAvailable(SDL3_image)
 
 # Fetch SDL3_ttf.
@@ -45,19 +40,24 @@ FetchContent_Declare(
     SDL3_ttf
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf
     GIT_TAG        release-3.2.2
-    FIND_PACKAGE_ARGS)
+    FIND_PACKAGE_ARGS 3.2
+)
 set(SDLTTF_VENDORED ON)
-set(SDLTTF_HARFBUZZ OFF)
+set(SDLTTF_HARFBUZZ OFF) # disabled for now
 FetchContent_MakeAvailable(SDL3_ttf)
 
 # Fetch necroutils.
 FetchContent_Declare(
     necroutils
     GIT_REPOSITORY https://github.com/maximalekseenko/necroutils
-    GIT_TAG        db74f1de196acdef9a4251ca00115913a8a0e599
-    FIND_PACKAGE_ARGS)
+    GIT_TAG        1.0.0
+    FIND_PACKAGE_ARGS 1.0
+)
 FetchContent_MakeAvailable(necroutils)
 
+
+# -------------------- TARGET DECLAMATION INCLUDES --------------------
+include(GNUInstallDirs)
 
 # -------------------- SETUP INTERFACE --------------------
 add_library(interfaceengine_interface INTERFACE)
@@ -177,6 +177,8 @@ if(INTERFACEENGINE_RUN_CPPLINT)
 endif()
 
 # -------------------- INSTALLATION --------------------
+include(CMakePackageConfigHelpers)
+
 if(INTERFACEENGINE_INSTALL)
     install(TARGETS interfaceengine
         EXPORT interfaceengineTargets
