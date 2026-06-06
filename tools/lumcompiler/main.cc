@@ -2,19 +2,30 @@
 
 #include <SDL3/SDL.h>
 
+#include <iostream>
 #include <string>
 
 #include "interface/lumen/package/loader.h"
 #include "lumcompiler/exceptions.h"
 
+void PrintHelp() {
+  std::cout << R"(Lum Package Compiler -- a tool for compiling .lum files.
+Usage:
+  lumc <input-path> <output-path> [options]
+Arguments:
+  <input-path>    Path to *.lumdata file.
+  <output-path>   Path to file that will be written.
+Options:
+  -d, --dir.      If set, <output-path> is treated as an output directory insted.
+                  Name of the output file will be same as input *.lumdata file.
+)";
+}
+
 int main(int argc, char* argv[]) {
-  if (argc < 2)  // TODO(necromax): make a better way for getting parameters.
-    throw lumcompiler::LumcompilerError("No path to lumdata file provided.");
-  if (argc < 3)
-    throw lumcompiler::LumcompilerError(
-        "No path to output directory provided.");
-  if (argc > 3)  // TODO(necromax): process additional parameters.
-    throw lumcompiler::LumcompilerError("Too many arguments provided.");
+  if (argc < 3 || argc > 3) {
+    PrintHelp();
+    return 1;
+  }
 
   SDL_Surface* surface = SDL_CreateSurface(800, 600, SDL_PIXELFORMAT_RGBA8888);
   if (!surface) {
@@ -32,4 +43,6 @@ int main(int argc, char* argv[]) {
   interfaceengine::lumen::package::LumPackageLoader package_loader;
 
   package_loader.CompileFromLumdataFile(argv[1], argv[2], renderer);
+
+  return 0;
 }

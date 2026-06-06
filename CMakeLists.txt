@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 
+include(FetchContent)
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
 # -------------------- PROJECT --------------------
 project(interfaceengine
     VERSION 1.0.0
@@ -11,10 +15,9 @@ project(interfaceengine
 option(INTERFACEENGINE_INSTALL "Install interfaceengine and it's dependencies" ${PROJECT_IS_TOP_LEVEL})
 option(INTERFACEENGINE_RUN_CPPLINT "Run cpplint (Google style tests) when building" OFF)
 option(INTERFACEENGINE_COMPILE_DEFAULT_LUMC "Compile default lumcompiler additional tool" ON)
+option(INTERFACEENGINE_INSTALL_DEFAULT_LUMC "Install default lumcompiler after compiling" ${PROJECT_IS_TOP_LEVEL})
 
 # -------------------- FETCH LIBRARIES --------------------
-include(FetchContent)
-
 # Fetch SDL3.
 FetchContent_Declare(
     SDL3
@@ -175,9 +178,6 @@ endif()
 
 # -------------------- INSTALLATION --------------------
 if(INTERFACEENGINE_INSTALL)
-    include(GNUInstallDirs)
-    include(CMakePackageConfigHelpers)
-    
     install(TARGETS interfaceengine
         EXPORT interfaceengineTargets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
