@@ -43,6 +43,4 @@ void Interface::SendMessageToGui(
 
 void Interface::Quit() { impl_->is_running = false; }
 
-void Interface::AddLogSink(Logger::SinkPtr sink) {
-  impl_->logger.AddSink(sink);
-}
+void Interface::AddLogSink(LogSink::Ptr sink) { impl_->logger.AddSink(sink); }

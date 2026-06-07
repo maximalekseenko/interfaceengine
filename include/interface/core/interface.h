@@ -56,7 +56,7 @@ class INTERFACE_API Interface {
 
   /// @brief Add a logger sink for logs of this interface.
   /// @note Interface's logger name is "`InterfaceEngine`"
-  void AddLogSink(Logger::SinkPtr sink);
+  void AddLogSink(LogSink::Ptr sink);
 
  private:  // -------------------- PIMPL --------------------
   struct Impl;

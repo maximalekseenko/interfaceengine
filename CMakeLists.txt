@@ -44,8 +44,8 @@ FetchContent_MakeAvailable(SDL3_ttf)
 # Fetch necroutils.
 FetchContent_Declare(necroutils
     GIT_REPOSITORY https://github.com/maximalekseenko/necroutils
-    GIT_TAG        60c5d393018a308a32620def47fe89dfddaf0e1f
-    FIND_PACKAGE_ARGS 1.1
+    GIT_TAG        dc60bb93096cd08b4ab3c84b46fac7111dc36567
+    FIND_PACKAGE_ARGS 2.0
 )
 FetchContent_MakeAvailable(necroutils)
 
