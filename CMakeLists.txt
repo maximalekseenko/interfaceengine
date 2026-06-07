@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 
-# -------------------- PROJECT --------------------
 project(interfaceengine
     VERSION 1.0.0
     DESCRIPTION "Necromax's engine for 2d applications."
@@ -9,8 +8,6 @@ project(interfaceengine
 
 # -------------------- OPTIONS --------------------
 option(INTERFACEENGINE_INSTALL "Install interfaceengine and it's dependencies" ${PROJECT_IS_TOP_LEVEL})
-option(INTERFACEENGINE_RUN_CPPLINT "Run cpplint (Google style tests) when building" OFF)
-option(INTERFACEENGINE_COMPILE_DEFAULT_LUMC "Compile default lumcompiler additional tool" ON)
 option(INTERFACEENGINE_INSTALL_DEFAULT_LUMC "Install default lumcompiler after compiling" ${PROJECT_IS_TOP_LEVEL})
 
 # -------------------- FETCH LIBRARIES --------------------
@@ -26,37 +23,33 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(SDL3)
 
 # Fetch SDL3_image.
-FetchContent_Declare(
-    SDL3_image
+set(SDLIMAGE_VENDORED ON)
+FetchContent_Declare(SDL3_image
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_image
     GIT_TAG        release-3.2.6
     FIND_PACKAGE_ARGS 3.2
 )
-set(SDLIMAGE_VENDORED ON)
 FetchContent_MakeAvailable(SDL3_image)
 
 # Fetch SDL3_ttf.
-FetchContent_Declare(
-    SDL3_ttf
+set(SDLTTF_VENDORED ON)
+set(SDLTTF_HARFBUZZ OFF) # disabled for now
+FetchContent_Declare(SDL3_ttf
     GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf
     GIT_TAG        release-3.2.2
     FIND_PACKAGE_ARGS 3.2
 )
-set(SDLTTF_VENDORED ON)
-set(SDLTTF_HARFBUZZ OFF) # disabled for now
 FetchContent_MakeAvailable(SDL3_ttf)
 
 # Fetch necroutils.
-FetchContent_Declare(
-    necroutils
+FetchContent_Declare(necroutils
     GIT_REPOSITORY https://github.com/maximalekseenko/necroutils
-    GIT_TAG        1.0.0
-    FIND_PACKAGE_ARGS 1.0
+    GIT_TAG        60c5d393018a308a32620def47fe89dfddaf0e1f
+    FIND_PACKAGE_ARGS 1.1
 )
 FetchContent_MakeAvailable(necroutils)
 
-
-# -------------------- TARGET DECLAMATION INCLUDES --------------------
+# -------------------- TARGET DECLARATION INCLUDES --------------------
 include(GNUInstallDirs)
 
 # -------------------- SETUP INTERFACE --------------------
@@ -109,10 +102,7 @@ add_subdirectory("src/interface/window")
 
 add_subdirectory("src/interface/gui")
 
-if(INTERFACEENGINE_COMPILE_DEFAULT_LUMC)
-    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tools/lumcompiler")
-    add_dependencies(interfaceengine_interface interfaceengine_lumcompiler)
-endif()
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tools/lumcompiler")
 
 # -------------------- LIBRARY TARGET --------------------
 add_library(interfaceengine SHARED)
@@ -150,31 +140,13 @@ target_sources(interfaceengine
         src/interface/core/interface_impl.cpp
 )
 
-# -------------------- CPPLINT --------------------
-if(INTERFACEENGINE_RUN_CPPLINT)
-    include(FetchContent)
-    FetchContent_Declare(
-        cpplint
-        GIT_REPOSITORY https://github.com/cpplint/cpplint/
-        GIT_TAG        2.0.2)
-    FetchContent_MakeAvailable(cpplint)
-
-    find_package(Python3 COMPONENTS Interpreter REQUIRED)
-
-    add_custom_command(
-        TARGET interfaceengine POST_BUILD
-        COMMAND ${Python3_EXECUTABLE}
-        ${cpplint_SOURCE_DIR}/cpplint.py
-        "--recursive"
-        "--quiet"
-        "--root=${CMAKE_CURRENT_SOURCE_DIR}"
-        "--filter=-build/include_order"
-        "${CMAKE_CURRENT_SOURCE_DIR}/src"
-        "${CMAKE_CURRENT_SOURCE_DIR}/include"
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT "Running cpplint (Google styles tests) for interfaceengine."
-    )
-endif()
+# -------------------- LINT CHECK --------------------
+include(necroutilsRunCpplint)
+necroutils_RunCpplint(interfaceengine 
+    DIRECTORIES 
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
 # -------------------- INSTALLATION --------------------
 include(CMakePackageConfigHelpers)
