@@ -7,8 +7,17 @@ project(interfaceengine
 )
 
 # -------------------- OPTIONS --------------------
+include(CMakeDependentOption)
+
 option(INTERFACEENGINE_INSTALL "Install interfaceengine and it's dependencies" ${PROJECT_IS_TOP_LEVEL})
+
 option(INTERFACEENGINE_INSTALL_DEFAULT_LUMC "Install default lumcompiler after compiling" ${PROJECT_IS_TOP_LEVEL})
+
+option(INTERFACEENGINE_TESTING "Build testing suits" ${PROJECT_IS_TOP_LEVEL})
+
+cmake_dependent_option(INTERFACEENGINE_TESTING_GTEST "Build gtest suits" ON INTERFACEENGINE_TESTING OFF)
+
+cmake_dependent_option(INTERFACEENGINE_TESTING_CPPLINT "Build cpplint suit" ON INTERFACEENGINE_TESTING OFF)
 
 # -------------------- FETCH LIBRARIES --------------------
 include(FetchContent)
@@ -44,7 +53,7 @@ FetchContent_MakeAvailable(SDL3_ttf)
 # Fetch necroutils.
 FetchContent_Declare(necroutils
     GIT_REPOSITORY https://github.com/maximalekseenko/necroutils
-    GIT_TAG        dc60bb93096cd08b4ab3c84b46fac7111dc36567
+    GIT_TAG        fe350fba4f7d054e9ba5b75133fe652c18c8653f
     FIND_PACKAGE_ARGS 2.0
 )
 FetchContent_MakeAvailable(necroutils)
@@ -140,13 +149,15 @@ target_sources(interfaceengine
         src/interface/core/interface_impl.cpp
 )
 
-# -------------------- LINT CHECK --------------------
-include(necroutilsRunCpplint)
-necroutils_RunCpplint(interfaceengine 
-    DIRECTORIES 
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
-)
+# -------------------- TESTING --------------------
+if(INTERFACEENGINE_TESTING_CPPLINT)
+    include(necroutilsCpplintTest)
+    necroutils_CreateCpplintTests(interfaceengine 
+        DIRECTORIES 
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+endif()
 
 # -------------------- INSTALLATION --------------------
 include(CMakePackageConfigHelpers)
